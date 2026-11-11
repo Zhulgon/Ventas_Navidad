@@ -1,0 +1,29 @@
+{
+  "method": "OpenAI ImageGen integrado",
+  "confirmed": "2026-11-11",
+  "reference": "referencia.jpeg",
+  "photos": [
+    {
+      "sku": "MT-ROJO-REDONDO",
+      "name": "Mantel navideño rojo redondo con motivos dorados",
+      "dimensions": "Diámetro 150 cm",
+      "variant": "Rojo, redondo",
+      "file": "rojo-redondo.webp",
+      "original": "438bc3a160e0ce681bfe34e55e031ee29c10ee883451672ac6785a53554929fb",
+      "quantity": 1,
+      "price": 20000,
+      "prompt": "Use case: precise-object-edit. Asset type: one square primary product photograph for an existing Christmas resale catalogue. Image 1 is the edit target and sole source of the purchased product design. The edit target is ONLY the LEFT product thumbnail in the screenshot: ONE ROUND RED polyester Christmas tablecloth, supplier-stated diameter 150 cm. Keep the exact flat printed central gold Christmas motif and original red field, the printed gold bells and green/red foliage border, the same draped circular silhouette and visible decorative scalloped outline. Match the source pattern placement and original colors conservatively; keep faint lettering that belongs to the fabric as source pixels rather than trying to invent or retype wording. Display the actual cloth on a simple round neutral support table in the same three-quarter angle. Replace the surroundings with the existing collection's seamless matte warm ivory studio (#f5f0e7), soft diffused light, accurate color balance and gentle natural contact shadow. Show the complete cloth and enough of a simple support to explain its shape with comfortable margins. Preserve the actual inexpensive printed fabric, drape and artwork as faithfully as the small source permits. The two thumbnail images depict different products; include only the specified one. Remove screenshot UI, supplier labels, dimension arrows, blank screenshot margins, unrelated merchandise, measurements and promotional overlays. No added decorative accessories, garlands, candles, extra dishes, new fabric pattern, luxury material, overlay text, border, logos or watermarks. Deliver only this single product image."
+    },
+    {
+      "sku": "MT-BLANCO-LAZOS",
+      "name": "Mantel navideño blanco con árboles y lazos rojos",
+      "dimensions": "Medidas por confirmar",
+      "variant": "Blanco y rojo, rectangular",
+      "file": "blanco-lazos.webp",
+      "original": "438bc3a160e0ce681bfe34e55e031ee29c10ee883451672ac6785a53554929fb",
+      "quantity": 1,
+      "price": 20000,
+      "prompt": "Use case: precise-object-edit. Asset type: one square primary product photograph for an existing Christmas resale catalogue. Image 1 is the edit target and sole source of the purchased product design. The edit target is ONLY the RIGHT product thumbnail in the screenshot: ONE WHITE RECTANGULAR Christmas tablecloth with the actual large green Christmas-tree prints and red bow motifs along the hanging borders, white scalloped-looking edging with the original circular cutout-like details, and the red lower border visible in the reference. Preserve the flat printed artwork and original edge treatment without upgrading to lace or embroidery. Match the same corner-facing display on a simple neutral rectangular support table. Remove everything sitting on the tabletop, the chairs, room and background decorations. Preserve all visible real drape, colors, motif placement and shape; do not infer a size. Replace the surroundings with the existing collection's seamless matte warm ivory studio (#f5f0e7), soft diffused light, accurate color balance and gentle natural contact shadow. Show the complete cloth and enough of a simple support to explain its shape with comfortable margins. Preserve the actual inexpensive printed fabric, drape and artwork as faithfully as the small source permits. The two thumbnail images depict different products; include only the specified one. Remove screenshot UI, supplier labels, dimension arrows, blank screenshot margins, unrelated merchandise, measurements and promotional overlays. No added decorative accessories, garlands, candles, extra dishes, new fabric pattern, luxury material, overlay text, border, logos or watermarks. Deliver only this single product image."
+    }
+  ]
+}

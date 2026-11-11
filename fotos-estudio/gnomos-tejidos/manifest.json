@@ -1,0 +1,37 @@
+{
+  "method": "OpenAI ImageGen integrado",
+  "confirmed": "2026-11-11",
+  "sku": "GN-TEJIDOS",
+  "quantity": 10,
+  "quantity_scope": "Total de todos los modelos tejidos de estas referencias",
+  "price": 10000,
+  "sale_unit": "unidad",
+  "references": [
+    {
+      "file": "referencias/foto-1.jpeg",
+      "sha256": "6b6adc0e800f66bf3a3ce2b2ca70e2b1303f52f7e1b26d076fe4a64be476dd50"
+    },
+    {
+      "file": "referencias/foto-2.jpeg",
+      "sha256": "1103674347ffb59f6f8dda25bccb51e3870cf9d3054339bd72303a8ad8ffc941"
+    },
+    {
+      "file": "referencias/foto-3.jpeg",
+      "sha256": "46d65b1df055ee66fc2b46b2804a4a271b001a052a100a5160aafbfdb4361e9b"
+    }
+  ],
+  "photos": [
+    {
+      "file": "rojos-tejidos.webp",
+      "prompt": "Use case: precise-object-edit and compositing. Asset type: one square professional ecommerce studio photograph for an existing Christmas catalogue. Input 1 is the edit target. Keep precisely the TWO actual red/white/gray knitted gnomes in this photo, with their long bent knit hat tips, narrow gray felt bodies beneath their white beards, small beige noses, original red-and-white striped mittens and legs and simple red felt shoes. Preserve the two different natural bends in the hat tips and the exact fair-isle banding and snowflake patterns. Keep both complete figures and their long dangling legs. Place the actual figures side by side on a simple matte warm ivory studio ledge, with their original long legs hanging naturally over the edge. Use the existing catalogue look of seamless warm ivory (#f5f0e7), soft large diffused studio light, accurate white balance and gentle natural shadows. Frame complete hat tips, bodies, legs and shoes with comfortable margins. Preserve real handmade textures, construction, materials and proportions. Remove desk, computer, keyboard, lamp, bottles, mouse mat, cables, camera clutter and all unrelated surroundings. Keep the actual hats in the reference shape, without adding star toppers or pompom ornaments. No added merchandise, physical accessories, gold fabric, glow, caption, border, logo or typography. Return one clean square product photograph."
+    },
+    {
+      "file": "rojo-y-verde.webp",
+      "prompt": "Use case: precise-object-edit and compositing. Asset type: one square professional ecommerce studio photograph for an existing Christmas catalogue. Input 1 is the edit target. Keep precisely the TWO actual photographed gnomes: left, the red-bodied bearded model wearing a red/green/white patterned hat, red-and-white striped legs, pale mitten hands and red felt shoes; right, the green-bodied model with TWO long white pigtails, exactly TWO beige buttons on the green torso, green-and-white striped legs, green felt shoes and its original green/red/white patterned hat. Preserve their pointed bent knit hat ends, exact hat designs and original individual proportions. Place the actual figures side by side on a simple matte warm ivory studio ledge, with their original long legs hanging naturally over the edge. Use the existing catalogue look of seamless warm ivory (#f5f0e7), soft large diffused studio light, accurate white balance and gentle natural shadows. Frame complete hat tips, bodies, legs and shoes with comfortable margins. Preserve real handmade textures, construction, materials and proportions. Remove desk, computer, keyboard, lamp, bottles, mouse mat, cables, camera clutter and all unrelated surroundings. Keep the actual hats in the reference shape, without adding star toppers or pompom ornaments. No added merchandise, physical accessories, gold fabric, glow, caption, border, logo or typography. Return one clean square product photograph."
+    },
+    {
+      "file": "modelos.webp",
+      "prompt": "Use case: precise-object-edit and compositing. Asset type: one square professional ecommerce studio photograph for an existing Christmas catalogue. Composite a catalogue display of FOUR distinct model examples based strictly on the supplied references. Input 1 supplies ONE representative of the red/white/gray-hat model with gray body and long white beard. Input 2 supplies the red/green-pattern-hat bearded model AND the green model with two white pigtails and exactly two beige torso buttons. Input 3 is a purchase screenshot and supplies ONLY the gray knitted model on the far RIGHT of the little product photo. Use its actual gray/white/red knit hat pattern, white beard and gray striped legs. Discard all app UI, pricing and lettering from that screenshot. Display exactly one of each of these four models together. Match true knit construction, original felt shoes, body colors, beige noses, pigtails versus beard differences, hat patterns and original long bent knit hat tips as shown in these references. Their hats end in fabric knit points. The image is a display of available styles sold individually, and needs no visible text. Place the actual figures side by side on a simple matte warm ivory studio ledge, with their original long legs hanging naturally over the edge. Use the existing catalogue look of seamless warm ivory (#f5f0e7), soft large diffused studio light, accurate white balance and gentle natural shadows. Frame complete hat tips, bodies, legs and shoes with comfortable margins. Preserve real handmade textures, construction, materials and proportions. Remove desk, computer, keyboard, lamp, bottles, mouse mat, cables, camera clutter and all unrelated surroundings. Keep the actual hats in the reference shape, without adding star toppers or pompom ornaments. No added merchandise, physical accessories, gold fabric, glow, caption, border, logo or typography. Return one clean square product photograph."
+    }
+  ]
+}

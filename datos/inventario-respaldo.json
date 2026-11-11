@@ -1,0 +1,15 @@
+{
+  "saved_at_utc": "2026-11-11T21:36:08+00:00",
+  "inventory": "inventario-inicial.sqlite3",
+  "sha256": "047949530907b8b671510e00fe67cbbd75a07640695bd6f400f83a2d0ae58b9c",
+  "tables": {
+    "products": 63,
+    "photos": 126,
+    "studio_photos": 63,
+    "retired_products": 9,
+    "sales": 0,
+    "sale_components": 0,
+    "bundle_components": 3,
+    "settings": 0
+  }
+}

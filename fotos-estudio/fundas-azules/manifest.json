@@ -1,0 +1,14 @@
+{
+  "method": "OpenAI ImageGen integrado",
+  "confirmed": "2026-11-11",
+  "sku": "FD-AZUL-4",
+  "reference": "referencia.png",
+  "original": "6cc3fee948089c8e759b61663433e1d45e36f4a272bd6215ea11802d2387163d",
+  "file": "juego-4.webp",
+  "quantity": 1,
+  "pieces": 4,
+  "dimensions": "45 × 45 cm",
+  "price": 20000,
+  "price_basis": "Juego completo de cuatro fundas",
+  "prompt": "Use case: precise-object-edit. Asset type: one square professional catalogue photograph for the exact four-piece blue Christmas cushion-cover set in input image 1. The edit target is ONLY the small product photo at the LEFT of the purchase screenshot. It shows exactly FOUR square 45 × 45 cm covers in a two-by-two layout. Keep all four distinct original printed winter scenes matched to their own positions: upper-left the warm golden-lit snowy village/trees scene, upper-right the snowy chalet with its warm golden window lights, lower-left the small snowman beside the wintry cottage and bare trees, lower-right the snowy evergreen Christmas tree scene in the village. Match the actual visible picture on each cover carefully instead of replacing it with another illustration. Retain the original muted blue, slate blue, gray, snowy cream and warm yellow/gold palette. These are flat printed fabric images, with ordinary soft woven texture, simple straight seams and the same square cushion-display shape. Arrange them evenly in the same two-by-two orientation on the existing catalogue's seamless warm ivory studio backdrop (#f5f0e7), soft diffused side lighting and restrained natural contact shadows. Use comfortable consistent margins with all four covers fully visible. Remove the white order-list screenshot, seller title, price/quantity graphics and all other interface text. Keep the faithful printed art, proportions and relative pattern sizes. Do not invent embroidery, sequins, raised ornaments, bright added glitter or extra pillow designs. No new branding, caption, border or decorative props. Deliver the finished single studio photo of this exact set of four only."
+}

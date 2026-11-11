@@ -1,0 +1,57 @@
+{
+  "method": "OpenAI ImageGen integrado",
+  "confirmed": "2026-11-11",
+  "photos": [
+    {
+      "color": "dorado",
+      "file": "dorado.webp",
+      "reference": "referencias/dorado.jpeg",
+      "original": "3590e4d174d233ad507b5af3446a1e4438fe016b69684b95164bf6228b97bf25",
+      "quantity": 4,
+      "prompt": "Use case: precise-object-edit. Asset type: one square professional product photograph for an existing Christmas resale catalogue. Image 1 is the user's photograph of the actual physical product and is the sole edit target and identity reference. Match this champagne/rose-gold sequinned gnome exactly, including its reflective five-point gold star attached at the tip of the tall hat, the irregular real sequin knit structure, matching sequinned mittens and shoes, white fluffy beard, beige nose, thin brown-and-white striped knit legs and white furry cuffs. The material is the actual warm champagne/rose-gold metallic fabric in the photograph. Keep the real neutral unlit appearance. Replace only the surroundings and improve photographic presentation. Sit the exact same single gnome on the edge of a simple matte warm ivory studio plinth so its original long legs hang naturally. Use the collection's seamless warm ivory backdrop (#f5f0e7), soft large diffused studio light, accurate white balance and gentle natural contact shadows. Show the full product from its star tip to the ends of both shoes, centered with comfortable margins. Preserve actual construction, narrow hat proportions, color blocking, snowflake locations, real fabric weave, pose, facial features and relative limb lengths. Keep its star clearly visible. Remove the desk, mouse mat, computer, lamp, tumbler, cables and everything else outside the product. Keep one actual gnome in the image. No overlay, logos, text, decorative props, extra ornaments, added illumination, exaggerated sparkles, redesign or synthetic luxury details. The end of the hat is the visible five-point star. Deliver the finished image only.",
+      "sku": "GN-DORADO",
+      "price": 10000,
+      "sale_unit": "unidad"
+    },
+    {
+      "color": "rojo",
+      "file": "rojo.webp",
+      "reference": "referencias/rojo.jpeg",
+      "original": "90b2a421579f3352a4602b6f3730629fd1b7c291fe1213c4873481c66ef80fa8",
+      "quantity": 3,
+      "prompt": "Use case: precise-object-edit. Asset type: one square professional product photograph for an existing Christmas resale catalogue. Image 1 is the user's photograph of the actual physical product and is the sole edit target and identity reference. Match this red gnome exactly, including the bright red felt FIVE-POINT STAR sewn onto the top of its hat, dark wine-red and bright-red knit hat bands, the actual large and small knitted white snowflake motifs, matching red knit mitten arms, fluffy white beard, beige nose, red-and-white horizontally striped legs, white furry boot cuffs and soft bright red boots. Replace only the surroundings and improve photographic presentation. Sit the exact same single gnome on the edge of a simple matte warm ivory studio plinth so its original long legs hang naturally. Use the collection's seamless warm ivory backdrop (#f5f0e7), soft large diffused studio light, accurate white balance and gentle natural contact shadows. Show the full product from its star tip to the ends of both shoes, centered with comfortable margins. Preserve actual construction, narrow hat proportions, color blocking, snowflake locations, real fabric weave, pose, facial features and relative limb lengths. Keep its star clearly visible. Remove the desk, mouse mat, computer, lamp, tumbler, cables and everything else outside the product. Keep one actual gnome in the image. No overlay, logos, text, decorative props, extra ornaments, added illumination, exaggerated sparkles, redesign or synthetic luxury details. The end of the hat is the visible five-point star. Deliver the finished image only.",
+      "sku": "GN-ROJO",
+      "price": 10000,
+      "sale_unit": "unidad"
+    },
+    {
+      "color": "gris",
+      "file": "gris.webp",
+      "reference": "referencias/gris.jpeg",
+      "original": "1812e71e8861c79bcc6dc9b9670ac92d68137e7b40e5386646673f0bbee4cfd2",
+      "quantity": 3,
+      "prompt": "Use case: precise-object-edit. Asset type: one square professional product photograph for an existing Christmas resale catalogue. Image 1 is the user's photograph of the actual physical product and is the sole edit target and identity reference. Match this gray gnome exactly, including the gray fabric FIVE-POINT STAR attached at the top, tall soft pointed hat with its alternating dark and light gray knit bands and large white knitted snowflakes, gray-and-white striped legs, gray felt boots and white furry boot cuffs, gray mitten arms, white fluffy beard and beige nose. Show the full gray felt star at the top, completing only the clipped outer edge consistent with the visible same-color fabric star. Replace only the surroundings and improve photographic presentation. Sit the exact same single gnome on the edge of a simple matte warm ivory studio plinth so its original long legs hang naturally. Use the collection's seamless warm ivory backdrop (#f5f0e7), soft large diffused studio light, accurate white balance and gentle natural contact shadows. Show the full product from its star tip to the ends of both shoes, centered with comfortable margins. Preserve actual construction, narrow hat proportions, color blocking, snowflake locations, real fabric weave, pose, facial features and relative limb lengths. Keep its star clearly visible. Remove the desk, mouse mat, computer, lamp, tumbler, cables and everything else outside the product. Keep one actual gnome in the image. No overlay, logos, text, decorative props, extra ornaments, added illumination, exaggerated sparkles, redesign or synthetic luxury details. The end of the hat is the visible five-point star. Deliver the finished image only.",
+      "sku": "GN-GRIS",
+      "price": 10000,
+      "sale_unit": "unidad"
+    }
+  ],
+  "purchase_groups": {
+    "dorado": [
+      "TM-008",
+      "TM-042"
+    ],
+    "rojo_gris": [
+      "TM-032",
+      "TM-038",
+      "TM-049"
+    ]
+  },
+  "retired_skus": [
+    "TM-008",
+    "TM-032",
+    "TM-038",
+    "TM-042",
+    "TM-049"
+  ]
+}

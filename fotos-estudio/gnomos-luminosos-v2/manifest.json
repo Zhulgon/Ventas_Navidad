@@ -1,0 +1,73 @@
+{
+  "method": "OpenAI ImageGen integrado",
+  "confirmed": "2026-11-11",
+  "bundle": {
+    "sku": "GN-TRIO",
+    "components": [
+      {
+        "sku": "GN-DORADO",
+        "quantity": 1
+      },
+      {
+        "sku": "GN-GRIS",
+        "quantity": 1
+      },
+      {
+        "sku": "GN-ROJO",
+        "quantity": 1
+      }
+    ]
+  },
+  "references": [
+    {
+      "file": "referencias/dorado.jpeg",
+      "original": "3590e4d174d233ad507b5af3446a1e4438fe016b69684b95164bf6228b97bf25"
+    },
+    {
+      "file": "referencias/gris.jpeg",
+      "original": "1812e71e8861c79bcc6dc9b9670ac92d68137e7b40e5386646673f0bbee4cfd2"
+    },
+    {
+      "file": "referencias/rojo.jpeg",
+      "original": "90b2a421579f3352a4602b6f3730629fd1b7c291fe1213c4873481c66ef80fa8"
+    }
+  ],
+  "photos": [
+    {
+      "sku": "GN-DORADO",
+      "file": "dorado-v2.webp",
+      "reference": "referencias/dorado.jpeg",
+      "original": "3590e4d174d233ad507b5af3446a1e4438fe016b69684b95164bf6228b97bf25",
+      "price": 10000,
+      "pieces": 1,
+      "prompt": "Use case: precise-object-edit and product compositing. Edit the supplied photographs of the user's actual small LIGHT-UP Christmas gnomes for an inviting, premium ecommerce Christmas catalogue. Show one individual the actual champagne/rose-gold sequin gnome with its five-point gold star, matching sequin mittens and shoes, brown-and-white striped legs and white furry boot cuffs. The user specifically wants their posture corrected: place every body upright, face-on and vertical, straighten each tall soft hat to stand vertically, with its star centered directly above its nose, and align the two long hanging legs neatly so the toy looks tidy and balanced. Preserve the original product proportions, fabrics, actual hat patterns, nose, white beard, real boot shapes and all five-point star toppers. Turn on the toy's existing warm-white internal light, making a gentle realistic golden body glow softly diffuse through the lower beard and body, as a light-up fabric Christmas ornament. Keep the textile and body clearly readable. Sit the toy or toys on the front edge of a low matte ivory studio display ledge with hanging legs straight and both feet fully visible. Restage with a refined warm ivory / pale champagne background and slightly darker soft warm tones behind the toy so the cozy internal illumination is visibly attractive. Soft diffused commercial studio light and subtle natural contact shadows. The glow should be small and warm, following the actual toy body, not theatrical neon or a huge halo. Frame the complete star tips and shoes with comfortable margins, square photograph. Keep real texture and authentic product colors. Remove the desk, electronics, tumbler, lamp, cords and surroundings. No added ornaments, props, lettering, labels or border. Deliver one polished realistic product photograph."
+    },
+    {
+      "sku": "GN-GRIS",
+      "file": "gris-v2.webp",
+      "reference": "referencias/gris.jpeg",
+      "original": "1812e71e8861c79bcc6dc9b9670ac92d68137e7b40e5386646673f0bbee4cfd2",
+      "price": 10000,
+      "pieces": 1,
+      "prompt": "Use case: precise-object-edit and product compositing. Edit the supplied photographs of the user's actual small LIGHT-UP Christmas gnomes for an inviting, premium ecommerce Christmas catalogue. Show one individual the actual gray knit gnome with its gray felt five-point star, alternating gray hat bands and white snowflakes, gray-and-white striped legs, gray felt boots and white furry boot cuffs. The user specifically wants their posture corrected: place every body upright, face-on and vertical, straighten each tall soft hat to stand vertically, with its star centered directly above its nose, and align the two long hanging legs neatly so the toy looks tidy and balanced. Preserve the original product proportions, fabrics, actual hat patterns, nose, white beard, real boot shapes and all five-point star toppers. Turn on the toy's existing warm-white internal light, making a gentle realistic golden body glow softly diffuse through the lower beard and body, as a light-up fabric Christmas ornament. Keep the textile and body clearly readable. Sit the toy or toys on the front edge of a low matte ivory studio display ledge with hanging legs straight and both feet fully visible. Restage with a refined warm ivory / pale champagne background and slightly darker soft warm tones behind the toy so the cozy internal illumination is visibly attractive. Soft diffused commercial studio light and subtle natural contact shadows. The glow should be small and warm, following the actual toy body, not theatrical neon or a huge halo. Frame the complete star tips and shoes with comfortable margins, square photograph. Keep real texture and authentic product colors. Remove the desk, electronics, tumbler, lamp, cords and surroundings. No added ornaments, props, lettering, labels or border. Deliver one polished realistic product photograph."
+    },
+    {
+      "sku": "GN-ROJO",
+      "file": "rojo-v2.webp",
+      "reference": "referencias/rojo.jpeg",
+      "original": "90b2a421579f3352a4602b6f3730629fd1b7c291fe1213c4873481c66ef80fa8",
+      "price": 10000,
+      "pieces": 1,
+      "prompt": "Use case: precise-object-edit and product compositing. Edit the supplied photographs of the user's actual small LIGHT-UP Christmas gnomes for an inviting, premium ecommerce Christmas catalogue. Show one individual the actual red knit gnome with its red felt five-point star, red and burgundy hat bands and white snowflakes, red-and-white striped legs, bright red felt boots and white furry boot cuffs. The user specifically wants their posture corrected: place every body upright, face-on and vertical, straighten each tall soft hat to stand vertically, with its star centered directly above its nose, and align the two long hanging legs neatly so the toy looks tidy and balanced. Preserve the original product proportions, fabrics, actual hat patterns, nose, white beard, real boot shapes and all five-point star toppers. Turn on the toy's existing warm-white internal light, making a gentle realistic golden body glow softly diffuse through the lower beard and body, as a light-up fabric Christmas ornament. Keep the textile and body clearly readable. Sit the toy or toys on the front edge of a low matte ivory studio display ledge with hanging legs straight and both feet fully visible. Restage with a refined warm ivory / pale champagne background and slightly darker soft warm tones behind the toy so the cozy internal illumination is visibly attractive. Soft diffused commercial studio light and subtle natural contact shadows. The glow should be small and warm, following the actual toy body, not theatrical neon or a huge halo. Frame the complete star tips and shoes with comfortable margins, square photograph. Keep real texture and authentic product colors. Remove the desk, electronics, tumbler, lamp, cords and surroundings. No added ornaments, props, lettering, labels or border. Deliver one polished realistic product photograph."
+    },
+    {
+      "sku": "GN-TRIO",
+      "file": "trio.webp",
+      "reference": "referencias/dorado.jpeg",
+      "original": "3590e4d174d233ad507b5af3446a1e4438fe016b69684b95164bf6228b97bf25",
+      "price": 25000,
+      "pieces": 3,
+      "prompt": "Use case: precise-object-edit and product compositing. Edit the supplied photographs of the user's actual small LIGHT-UP Christmas gnomes for an inviting, premium ecommerce Christmas catalogue. Show exactly THREE gnomes together, one of each actual model from the inputs: the actual champagne/rose-gold sequin gnome with its five-point gold star, matching sequin mittens and shoes, brown-and-white striped legs and white furry boot cuffs, the actual gray knit gnome with its gray felt five-point star, alternating gray hat bands and white snowflakes, gray-and-white striped legs, gray felt boots and white furry boot cuffs and the actual red knit gnome with its red felt five-point star, red and burgundy hat bands and white snowflakes, red-and-white striped legs, bright red felt boots and white furry boot cuffs. Arrange them side by side in that order at the same scale, all three equally prominent and with visible separation. The user specifically wants their posture corrected: place every body upright, face-on and vertical, straighten each tall soft hat to stand vertically, with its star centered directly above its nose, and align the two long hanging legs neatly so the toy looks tidy and balanced. Preserve the original product proportions, fabrics, actual hat patterns, nose, white beard, real boot shapes and all five-point star toppers. Turn on the toy's existing warm-white internal light, making a gentle realistic golden body glow softly diffuse through the lower beard and body, as a light-up fabric Christmas ornament. Keep the textile and body clearly readable. Sit the toy or toys on the front edge of a low matte ivory studio display ledge with hanging legs straight and both feet fully visible. Restage with a refined warm ivory / pale champagne background and slightly darker soft warm tones behind the toy so the cozy internal illumination is visibly attractive. Soft diffused commercial studio light and subtle natural contact shadows. The glow should be small and warm, following the actual toy body, not theatrical neon or a huge halo. Frame the complete star tips and shoes with comfortable margins, square photograph. Keep real texture and authentic product colors. Remove the desk, electronics, tumbler, lamp, cords and surroundings. No added ornaments, props, lettering, labels or border. Deliver one polished realistic product photograph."
+    }
+  ]
+}

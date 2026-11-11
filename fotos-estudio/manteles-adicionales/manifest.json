@@ -1,0 +1,54 @@
+{
+  "method": "OpenAI ImageGen integrado",
+  "confirmed": "2026-11-11",
+  "photos": [
+    {
+      "sku": "MT-PE-NACIMIENTO",
+      "name": "Mantel navideño desechable con nacimiento",
+      "dimensions": "220 × 130 cm",
+      "variant": "Rectangular, PE desechable",
+      "file": "pe-nacimiento.webp",
+      "reference": "referencia-1.jpeg",
+      "original": "2023193ca787516ff11291923bf0218578c37b2f9cc4460c510cb915ff849b01",
+      "quantity": 1,
+      "price": 20000,
+      "prompt": "Use case: precise-object-edit. Asset type: one square professional resale catalogue photograph. Input 1 is the supplied purchase screenshot and is the sole source of product identity. Edit ONLY the TOP LEFT product photograph in input 1, corresponding to the first order row. It is a single rectangular disposable polyethylene Christmas table cover, 220 × 130 cm, with a light gray/ivory ground and the original nativity scene printed along the hem: holy-family figures and animals beneath arched/architectural shapes, holly/garland print and red accents. Preserve the exact existing flat artwork and its placement, corner drape and simple thin lightly glossy plastic material, using the original angle on a neutral rectangular support. Its material is thin disposable PE, so keep it smooth with natural light plastic folds and a discreet sheen. Do not turn it into woven fabric, add appliqué, make the material thick or invent more nativity figures. Ignore the plant grow bag and the round tablecloth elsewhere in the screenshot. Retouch conservatively, preserving the photographed print design rather than inventing new motifs or upgrading the material. Stage the exact purchased tablecloth on a simple unobtrusive support in the catalogue's seamless matte warm ivory studio (#f5f0e7). Soft large diffused light, accurate white balance and gentle natural contact shadows. Keep the full tablecloth and its original drape visible, with clear comfortable margins. The support is a neutral display table. Erase screenshot UI, prices, arrows, measurement marks, unrelated product thumbnails, external seller text, insets and promotional labels. Preserve actual printed lettering that belongs to the cloth as artwork. No decorations placed on the tabletop, added merchandise, editorial typography, border, logos, watermark or luxury embellishment. Deliver the single isolated product photograph."
+    },
+    {
+      "sku": "MT-VINTAGE-150",
+      "name": "Mantel navideño redondo vintage con muñecos de nieve",
+      "dimensions": "Diámetro 150 cm",
+      "variant": "Redondo, crema, 150 cm",
+      "file": "vintage-150.webp",
+      "reference": "referencia-1.jpeg",
+      "original": "2023193ca787516ff11291923bf0218578c37b2f9cc4460c510cb915ff849b01",
+      "quantity": 1,
+      "price": 20000,
+      "prompt": "Use case: precise-object-edit. Asset type: one square professional resale catalogue photograph. Input 1 is the supplied purchase screenshot and is the sole source of product identity. Edit ONLY the BOTTOM LEFT product photograph in input 1, corresponding to the last order row and its 150 cm round variant. It is one circular ivory/cream flat-printed polyester tablecloth, with a green and red holiday wreath centered on the tabletop, small scattered Christmas motifs on the cream field, and the actual vintage village, trees and cheerful snowman scenes around the hanging border. Preserve the original relative print sizes, colors, scalloped-looking lower drape, all depicted characters as photographed and the original simple round support. Preserve this precise print rather than drawing unrelated snow scenes. Ignore the disposable rectangular cloth and plant grow bag in the other order rows. Retouch conservatively, preserving the photographed print design rather than inventing new motifs or upgrading the material. Stage the exact purchased tablecloth on a simple unobtrusive support in the catalogue's seamless matte warm ivory studio (#f5f0e7). Soft large diffused light, accurate white balance and gentle natural contact shadows. Keep the full tablecloth and its original drape visible, with clear comfortable margins. The support is a neutral display table. Erase screenshot UI, prices, arrows, measurement marks, unrelated product thumbnails, external seller text, insets and promotional labels. Preserve actual printed lettering that belongs to the cloth as artwork. No decorations placed on the tabletop, added merchandise, editorial typography, border, logos, watermark or luxury embellishment. Deliver the single isolated product photograph."
+    },
+    {
+      "sku": "MT-RENOS-180",
+      "name": "Mantel navideño redondo vintage con renos y muñecos de nieve",
+      "dimensions": "Diámetro 180 cm",
+      "variant": "Redondo, crema, 180 cm",
+      "file": "renos-180.webp",
+      "reference": "referencia-2.jpeg",
+      "original": "de8aac40c139d25effbdbaba99aa026029859e0edc8ffd9214a77f8ff0aef0f2",
+      "quantity": 1,
+      "price": 20000,
+      "prompt": "Use case: precise-object-edit. Asset type: one square professional resale catalogue photograph. Input 1 is the supplied purchase screenshot and is the sole source of product identity. Edit ONLY the TOP LEFT main product photograph in input 1, corresponding to the first order row and its 180 cm round variant. It is one circular cream flat-printed polyester tablecloth. Preserve the soft ivory field, the actual gold 'MERRY CHRISTMAS' lettering printed at the center of the textile, and the original vintage deer/reindeer, snowmen and trees around the hanging perimeter. Keep existing print placement and relative sizes. Keep all imagery flat on the fabric. Remove the small separate product detail inset boxes beneath the main product. Ignore the anime figurines, cleaning brush and different bottom-row tablecloth. Retouch conservatively, preserving the photographed print design rather than inventing new motifs or upgrading the material. Stage the exact purchased tablecloth on a simple unobtrusive support in the catalogue's seamless matte warm ivory studio (#f5f0e7). Soft large diffused light, accurate white balance and gentle natural contact shadows. Keep the full tablecloth and its original drape visible, with clear comfortable margins. The support is a neutral display table. Erase screenshot UI, prices, arrows, measurement marks, unrelated product thumbnails, external seller text, insets and promotional labels. Preserve actual printed lettering that belongs to the cloth as artwork. No decorations placed on the tabletop, added merchandise, editorial typography, border, logos, watermark or luxury embellishment. Deliver the single isolated product photograph."
+    },
+    {
+      "sku": "MT-CORONA-180",
+      "name": "Mantel navideño redondo beige con corona y personajes",
+      "dimensions": "Diámetro 180 cm",
+      "variant": "Redondo, beige, 180 cm",
+      "file": "corona-180.webp",
+      "reference": "referencia-2.jpeg",
+      "original": "de8aac40c139d25effbdbaba99aa026029859e0edc8ffd9214a77f8ff0aef0f2",
+      "quantity": 1,
+      "price": 20000,
+      "prompt": "Use case: precise-object-edit. Asset type: one square professional resale catalogue photograph. Input 1 is the supplied purchase screenshot and is the sole source of product identity. Edit ONLY the BOTTOM LEFT main product photograph in input 1, corresponding to the last order row and its 180 cm round variant. It is one circular beige/cream flat-printed polyester tablecloth with the actual green-and-red central holiday wreath, scattered little motifs on the beige top, and the original large Christmas character scenes around the draped edge, including the snowman/Santa-style characters, greenery and red details exactly where the reference shows them. Keep the precise original print, round outline, naturally scalloped hanging fabric edge and colors. Remove the small separate textile detail inset boxes beneath the main product. Ignore all other order rows. Retouch conservatively, preserving the photographed print design rather than inventing new motifs or upgrading the material. Stage the exact purchased tablecloth on a simple unobtrusive support in the catalogue's seamless matte warm ivory studio (#f5f0e7). Soft large diffused light, accurate white balance and gentle natural contact shadows. Keep the full tablecloth and its original drape visible, with clear comfortable margins. The support is a neutral display table. Erase screenshot UI, prices, arrows, measurement marks, unrelated product thumbnails, external seller text, insets and promotional labels. Preserve actual printed lettering that belongs to the cloth as artwork. No decorations placed on the tabletop, added merchandise, editorial typography, border, logos, watermark or luxury embellishment. Deliver the single isolated product photograph."
+    }
+  ]
+}
