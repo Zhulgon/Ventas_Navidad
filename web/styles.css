@@ -159,6 +159,11 @@ td small, .item-name small { display: block; color: var(--muted); font-size: .74
 .store { max-width: 1350px; margin: auto; padding: 0 clamp(16px, 4vw, 48px) 38px; }
 .store-header, .preview-bar, .collection-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .store-header { padding: 18px 0; }
+.store-actions { display: flex; align-items: center; gap: 8px; }
+@media (max-width: 600px) {
+  .store-header { flex-wrap: wrap; }
+  .store-actions { margin-left: auto; }
+}
 .preview-bar { justify-content: start; padding: 10px 13px; background: #ebf0e8; border: 1px solid #d8e2d8; border-radius: 10px; color: #405b4a; margin-bottom: 14px; font-size: .86rem; }
 .preview-bar > svg { flex: none; }
 .preview-bar > button { margin-left: auto; }

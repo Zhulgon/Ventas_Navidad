@@ -1,7 +1,9 @@
 const app = document.querySelector('#app');
 const dialog = document.querySelector('#dialog');
 const notice = document.querySelector('#notice');
-const customer = location.pathname === '/catalogo';
+const publicSite = Boolean(window.COSAS_NAVIDENAS?.publicCatalog);
+const customer = publicSite || location.pathname === '/catalogo';
+const catalogUrl = () => new URL(publicSite ? './' : '/catalogo', location.href).href;
 const currency = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 const count = new Intl.NumberFormat('es-CO');
 const date = new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'America/Bogota' });
@@ -29,11 +31,12 @@ const icons = {
   settings: '<path d="M5 4v16M12 4v16M19 4v16"/><path d="M3 9h4m3 6h4m3-7h4" stroke-width="3"/>',
   image: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15" cy="8" r="1"/>',
   sparkle: '<path d="M12 2v20M2 12h20M5 5l14 14m0-14L5 19"/>',
+  share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m9 10.5 6-4m-6 7 6 4"/>',
 };
 const icon = name => `<svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">${icons[name]}</svg>`;
 function photo(p, css = '', original = false) {
   const source = original ? p.photo : p.studio_photo || p.photo;
-  return source ? `<img class="${css}" src="/foto/${escape(source)}" alt="${escape(p.name)}" loading="lazy">` : `<span class="photo-empty ${css}" aria-label="Sin fotografía">${icon('image')}</span>`;
+  return source ? `<img class="${css}" src="${publicSite ? './fotos/' : '/foto/'}${escape(source)}" alt="${escape(p.name)}" loading="lazy">` : `<span class="photo-empty ${css}" aria-label="Sin fotografía">${icon('image')}</span>`;
 }
 const adminNav = [ ['resumen', 'Resumen', 'dashboard'], ['inventario', 'Inventario', 'box'], ['ventas', 'Ventas', 'sale'], ['importar', 'Importar Excel', 'upload'] ];
 let data = { products: [], sales: [], whatsapp: '' };
@@ -44,7 +47,8 @@ let selection = new Map();
 try { selection = new Map(JSON.parse(localStorage.getItem(selectionKey) ?? '[]')); } catch { /* Empty selection. */ }
 
 async function request(path, options) {
-  const response = await fetch(`/api/${path}`, options);
+  if (publicSite && (path !== 'catalogo' || options)) throw new Error('Abre el panel local para administrar la tienda.');
+  const response = await fetch(publicSite ? './catalogo.json' : `/api/${path}`, options);
   const result = await response.json();
   if (!response.ok) throw new Error(result.error || 'No se pudo completar la operación.');
   return result;
@@ -70,14 +74,14 @@ function route() {
 }
 
 function brand(sidebar = false) {
-  return `<a class="brand" href="${customer ? '/catalogo' : '#resumen'}"><img src="/marca.svg" alt="" width="40" height="40"><span>Cosas Navideñas<small>${sidebar ? 'ESTUDIO DE REVENTA' : 'COLECCIÓN Y TIENDA'}</small></span></a>`;
+  return `<a class="brand" href="${publicSite ? './' : customer ? '/catalogo' : '#resumen'}"><img src="${publicSite ? './' : '/'}marca.svg" alt="" width="40" height="40"><span>Cosas Navideñas<small>${sidebar ? 'ESTUDIO DE REVENTA' : 'COLECCIÓN Y TIENDA'}</small></span></a>`;
 }
 
 function render() {
   const page = route();
   const label = adminNav.find(([key]) => key === page)?.[1] || 'Vista del catálogo';
   if (customer) {
-    app.innerHTML = `<div class="store"><header class="store-header">${brand()}<button data-act="selection" class="button outline selection-button">${icon('bag')} Mi selección <span data-bag-count></span></button></header><main id="contenido">${catalog()}</main></div>`;
+    app.innerHTML = `<div class="store"><header class="store-header">${brand()}<div class="store-actions"><button data-act="share-catalog" class="button outline" aria-label="Compartir catálogo">${icon('share')} <span>Compartir</span></button><button data-act="selection" class="button outline selection-button">${icon('bag')} Mi selección <span data-bag-count></span></button></div></header><main id="contenido">${catalog()}</main></div>`;
   } else {
     const content = ({ resumen: dashboard, inventario: inventory, ventas, importar: importer, catalogo: catalog })[page];
     app.innerHTML = `<div class="shell"><aside class="sidebar">${brand(true)}<div class="sidebar-content"><p class="nav-label">ESPACIO DE TRABAJO</p><nav aria-label="Panel de gestión">${adminNav.map(([id, name, image]) => `<a href="#${id}" ${page === id ? 'aria-current="page"' : ''}>${icon(image)}<span>${name}</span></a>`).join('')}</nav><p class="nav-label second">TIENDA</p><nav aria-label="Tienda"><a href="#catalogo" ${page === 'catalogo' ? 'aria-current="page"' : ''}>${icon('eye')}<span>Vista del catálogo</span></a><button data-act="settings">${icon('settings')}<span>Contacto</span></button></nav></div><footer class="sidebar-footer"><span class="online"></span><div>Inventario local<small>Guardado en este equipo</small></div></footer></aside><div class="workspace"><header class="topbar"><div><span>Gestión</span><span class="breadcrumb">/</span><strong>${label}</strong></div><a class="button outline" href="/catalogo" target="_blank" rel="noopener">Vista cliente ${icon('external')}</a></header><main id="contenido" class="main">${content()}</main></div></div>`;
@@ -198,7 +202,8 @@ function settingsDialog() {
 function detail(p, original = false) {
   const currentQuantity = selectedItems().find(item => item.sku === p.sku)?.qty || 0;
   const canAdd = p.price > 0 && currentQuantity < selectionLimit(p);
-  const comparison = p.studio_photo ? `<p class="photo-caption">${original ? 'Foto de referencia' : 'Imagen de estudio editada con IA'} · <button class="text-button" data-act="${original ? 'detail' : 'original'}" data-id="${escape(p.sku)}">${original ? 'Ver estudio' : 'Ver referencia'}</button></p>` : '';
+  const referenceLink = p.photo !== p.studio_photo ? ` · <button class="text-button" data-act="${original ? 'detail' : 'original'}" data-id="${escape(p.sku)}">${original ? 'Ver estudio' : 'Ver referencia'}</button>` : '';
+  const comparison = p.studio_photo ? `<p class="photo-caption">${original ? 'Foto de referencia' : 'Imagen de estudio editada con IA'}${referenceLink}</p>` : '';
   openDialog(escape(p.name), `<div class="detail"><div>${photo(p, 'detail-photo', original)}${comparison}</div><div class="detail-info"><span class="badge green">${escape(p.sku)}</span><dl><dt>Presentación</dt><dd>${p.pieces === 1 ? 'Venta por unidad' : `${count.format(p.pieces)} piezas por juego`}</dd>${p.variant ? `<dt>Variante</dt><dd>${escape(p.variant)}</dd>` : ''}${p.dimensions ? `<dt>Medidas</dt><dd>${escape(p.dimensions)}</dd>` : ''}<dt>Disponibilidad</dt><dd>${p.stock ? `${p.stock} ${unitName(p, p.stock !== 1)} ${p.stock === 1 ? 'disponible' : 'disponibles'}` : 'Agotado'}</dd></dl><div class="detail-price">${p.price == null ? 'Precio por definir' : money(p.price)}</div><button class="button primary" data-act="select" data-id="${escape(p.sku)}" ${canAdd ? '' : 'disabled'}>${icon('plus')} Agregar a mi selección</button>${customer ? '' : `<button class="text-button" data-act="edit" data-id="${escape(p.sku)}">Editar artículo</button>`}</div></div>`, escape(p.category));
 }
 
@@ -252,7 +257,7 @@ function summaryText(items) {
 function selectionDialog() {
   const items = selectedItems();
   const whatsapp = data.whatsapp ? `https://wa.me/${data.whatsapp}?text=${encodeURIComponent(summaryText(items))}` : '';
-  openDialog('Mi selección', items.length ? `<div class="selection-list">${items.map(p => `<div>${photo(p, 'thumb')}<span><strong>${escape(p.name)}</strong><small>${money(p.price)} / ${unitName(p)}</small></span><label><span class="visually-hidden">Cantidad de ${escape(p.name)}</span><input type="number" min="1" max="${selectionLimit(p)}" value="${p.qty}" data-selection="${escape(p.sku)}"></label><button class="icon-button" data-act="remove" data-id="${escape(p.sku)}" aria-label="Quitar ${escape(p.name)}">${icon('close')}</button></div>`).join('')}</div><div class="selection-total"><span>Total estimado</span><strong>${money(sum(items, p => p.price * p.qty))}</strong></div><p class="form-help">Comparte esta lista para confirmar disponibilidad y acordar la compra.</p><div class="form-actions"><button class="button outline" data-act="copy">Copiar selección</button>${whatsapp ? `<a class="button primary" href="${escape(whatsapp)}" target="_blank" rel="noopener">Abrir WhatsApp ${icon('external')}</a>` : ''}</div>` : '<p class="empty">Tu selección está vacía. Agrega artículos con precio y disponibilidad desde la colección.</p>', 'CATÁLOGO');
+  openDialog('Mi selección', items.length ? `<div class="selection-list">${items.map(p => `<div>${photo(p, 'thumb')}<span><strong>${escape(p.name)}</strong><small>${money(p.price)} / ${unitName(p)}</small></span><label><span class="visually-hidden">Cantidad de ${escape(p.name)}</span><input type="number" min="1" max="${selectionLimit(p)}" value="${p.qty}" data-selection="${escape(p.sku)}"></label><button class="icon-button" data-act="remove" data-id="${escape(p.sku)}" aria-label="Quitar ${escape(p.name)}">${icon('close')}</button></div>`).join('')}</div><div class="selection-total"><span>Total estimado</span><strong>${money(sum(items, p => p.price * p.qty))}</strong></div><p class="form-help">Comparte esta lista para confirmar disponibilidad y acordar la compra.</p><div class="form-actions"><button class="button outline" data-act="copy">Copiar selección</button><button class="button primary" data-act="share-selection">${icon('share')} Compartir selección</button>${whatsapp ? `<a class="button primary" href="${escape(whatsapp)}" target="_blank" rel="noopener">Abrir WhatsApp ${icon('external')}</a>` : ''}</div>` : '<p class="empty">Tu selección está vacía. Agrega artículos con precio y disponibilidad desde la colección.</p>', 'CATÁLOGO');
 }
 
 async function busy(button, job) {
@@ -316,6 +321,18 @@ async function handleAction(event) {
   if (act === 'settings') settingsDialog();
   if (act === 'close') dialog.close();
   if (act === 'selection') selectionDialog();
+  if (act === 'share-catalog' || act === 'share-selection') {
+    const text = act === 'share-selection' ? summaryText(selectedItems()) : 'Mira la colección de Cosas Navideñas';
+    try {
+      if (navigator.share) await navigator.share({ title: 'Cosas Navideñas', text, url: catalogUrl() });
+      else {
+        await navigator.clipboard.writeText(`${text}\n${catalogUrl()}`);
+        toast(act === 'share-selection' ? 'Selección y enlace copiados.' : 'Enlace del catálogo copiado.');
+      }
+    } catch (error) {
+      if (error.name !== 'AbortError') openDialog('Comparte el catálogo', `<label class="field"><span>Texto para compartir</span><textarea readonly rows="8">${escape(text + '\n' + catalogUrl())}</textarea></label>`);
+    }
+  }
   if (act === 'category') {
     Object.assign(filters.inventory, { category: id, text: '', status: '' });
     location.hash = 'inventario';

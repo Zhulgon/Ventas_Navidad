@@ -2,6 +2,23 @@
 
 Plataforma local de reventa con panel de inventario, ventas y catálogo. Cada ficha indica si se vende por unidad o por juego y cuántas piezas incluye.
 
+## Catálogo en internet
+
+Enlace para compartir: [Cosas Navideñas](https://zhulgon.github.io/Ventas_Navidad/).
+
+GitHub Pages publica la carpeta `docs` de la rama `main`. El catálogo permite buscar, revisar fotos y precios, armar una selección y compartirla. Funciona aunque el equipo esté apagado. Las compras se acuerdan con el vendedor; seleccionar artículos no reserva existencias.
+
+El panel de gestión y el registro de ventas funcionan en la plataforma local. La web muestra el inventario de la última publicación. Para actualizarla después de cambiar precios, fotos o existencias, ejecuta desde esta carpeta:
+
+```powershell
+py -3 exportar_catalogo.py
+git add docs
+git commit -m "Actualizar catalogo publico"
+git push
+```
+
+La exportación incluye las referencias visibles, sus precios, disponibilidad y fotografías. Los costos de compra, las notas de ventas y los datos de clientes se quedan fuera de `docs`. Los archivos de respaldo del repositorio se mantienen aparte del catálogo publicado.
+
 ## Abrir en Windows
 
 Ejecuta `Abrir plataforma.cmd`. Requiere Python 3.10 o posterior y abre [el panel](http://127.0.0.1:8131/) en el navegador. Mantén abierta la consola mientras uses la plataforma. También puedes iniciar desde PowerShell con `py -3 plataforma.py --abrir`.

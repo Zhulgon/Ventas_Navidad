@@ -261,6 +261,15 @@ def product_components(db, products):
     return [dict(product, components=components.get(product['sku'], [])) for product in products]
 
 
+def public_catalog(db):
+    products = db.execute('SELECT i.sku, name, category, pieces, dimensions, variant, price, '
+                          'i.photo, s.photo AS studio_photo, stock, is_bundle' + STUDIO_INVENTORY +
+                          ' WHERE published=1 AND price>0 AND ' + ACTIVE_PRODUCT + ' ORDER BY i.sku',
+                          ARCHIVED_CATEGORIES)
+    contact = db.execute("SELECT value FROM settings WHERE key='whatsapp'").fetchone()
+    return dict(products=product_components(db, products.fetchall()), whatsapp=contact['value'] if contact else '')
+
+
 class Server(ThreadingHTTPServer):
     request_queue_size = 64
 
@@ -309,12 +318,9 @@ class App(BaseHTTPRequestHandler):
                     sales = db.execute('SELECT * FROM sales ORDER BY id DESC')
                     result = dict(products=product_components(db, products.fetchall()), sales=[dict(row) for row in sales])
                 else:
-                    products = db.execute('SELECT i.sku, name, category, pieces, dimensions, variant, price, '
-                                          'i.photo, s.photo AS studio_photo, stock, is_bundle' + STUDIO_INVENTORY +
-                                          ' WHERE published=1 AND price>0 AND ' + ACTIVE_PRODUCT + ' ORDER BY i.sku',
-                                          ARCHIVED_CATEGORIES)
-                    result = dict(products=product_components(db, products.fetchall()))
-            self.send_json(dict(**result, whatsapp=contact['value'] if contact else ''))
+                    result = public_catalog(db)
+            result['whatsapp'] = contact['value'] if contact else ''
+            self.send_json(result)
             return
         if re.fullmatch(r'/foto/[a-f0-9]{64}', url.path):
             with database() as db:
