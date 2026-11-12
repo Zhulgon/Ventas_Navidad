@@ -1,11 +1,17 @@
 {
   "brand": "Navidad BGA",
-  "edition": 2,
+  "edition": 3,
   "format": "1080×1920, 9:16",
   "fps": 30,
-  "frames": 738,
-  "art_direction": "Cinco protagonistas; apertura con producto, fotos más grandes, texto breve y precios en una misma posición",
-  "duration_seconds": 24.6,
+  "frames": 1404,
+  "art_direction": "Colecciones ordenadas: gnomos pequeños con luz y grandes sin luz; seis modelos de Papá Noel; variedad de manteles; fundas con precio corregido",
+  "chapters": [
+    "Muñequitos y gnomos",
+    "Papá Noel",
+    "Manteles",
+    "Fundas"
+  ],
+  "duration_seconds": 46.8,
   "transitions": "Paso de 12 fotogramas por un fondo liso, sin superponer productos; acercamiento suave sin recortar",
   "audio": "Composición instrumental original sintetizada en crear_reel.py; sin samples externos",
   "instagram": "https://www.instagram.com/navidadbga/",
@@ -13,10 +19,11 @@
   "scenes": [
     {
       "kind": "product",
-      "frames": 138,
+      "frames": 120,
       "number": 0,
+      "chapter": 0,
       "sku": "GN-TRIO",
-      "category": "MUÑEQUITOS CON LUZ",
+      "category": "MUÑEQUITOS PEQUEÑOS CON LUZ",
       "title": [
         "La Navidad",
         "empieza en casa."
@@ -29,13 +36,31 @@
     },
     {
       "kind": "product",
-      "frames": 138,
+      "frames": 120,
       "number": 1,
-      "sku": "TM-010",
-      "category": "PAPÁ NOEL VERDE Y DORADO",
+      "chapter": 0,
+      "sku": "GN-TEJIDOS",
+      "category": "GNOMOS GRANDES · SIN LUZ",
       "title": [
-        "Magia en",
-        "cada detalle."
+        "Piernas largas,",
+        "mucho encanto."
+      ],
+      "price": 10000,
+      "unit": "Cada gnomo",
+      "detail": "Modelos surtidos · Sin luz",
+      "pieces": 1,
+      "source": "docs/fotos/adefc381c328e481d1563fba94eeee1efed9aabe9849ef502f5e33c57a8212ff.webp"
+    },
+    {
+      "kind": "product",
+      "frames": 102,
+      "number": 2,
+      "chapter": 1,
+      "sku": "TM-010",
+      "category": "PAPÁ NOEL · COLECCIÓN",
+      "title": [
+        "Verde",
+        "y dorado."
       ],
       "price": 35000,
       "unit": "Por unidad",
@@ -45,10 +70,96 @@
     },
     {
       "kind": "product",
-      "frames": 138,
-      "number": 2,
+      "frames": 102,
+      "number": 3,
+      "chapter": 1,
+      "sku": "TM-011",
+      "category": "PAPÁ NOEL · COLECCIÓN",
+      "title": [
+        "Blanco",
+        "y dorado."
+      ],
+      "price": 30000,
+      "unit": "Por unidad",
+      "detail": "Atuendo dorado",
+      "pieces": 1,
+      "source": "docs/fotos/22f3c2e6211b20f19e200597865747dd66057154dda391fce95085afe959025b.webp"
+    },
+    {
+      "kind": "product",
+      "frames": 102,
+      "number": 4,
+      "chapter": 1,
+      "sku": "TM-012",
+      "category": "PAPÁ NOEL · COLECCIÓN",
+      "title": [
+        "El encanto",
+        "del rojo clásico."
+      ],
+      "price": 35000,
+      "unit": "Por unidad",
+      "detail": "Traje rojo escocés",
+      "pieces": 1,
+      "source": "docs/fotos/b6da360fce7078f5e03278b124fbe2a6e4a28d52f95c6a0784ef2970fb0fb71d.webp"
+    },
+    {
+      "kind": "product",
+      "frames": 102,
+      "number": 5,
+      "chapter": 1,
+      "sku": "TM-019",
+      "category": "PAPÁ NOEL · COLECCIÓN",
+      "title": [
+        "Azul",
+        "de invierno."
+      ],
+      "price": 45000,
+      "unit": "Juego de 2 figuras",
+      "detail": "Azul y blanco",
+      "pieces": 2,
+      "source": "docs/fotos/edd97e0e3610bbc85475745f7ae2c4e96a8d1c02324a8f279257973ec16da688.webp"
+    },
+    {
+      "kind": "product",
+      "frames": 102,
+      "number": 6,
+      "chapter": 1,
+      "sku": "TM-046",
+      "category": "PAPÁ NOEL · COLECCIÓN",
+      "title": [
+        "Gris, rojo",
+        "y mucho estilo."
+      ],
+      "price": 30000,
+      "unit": "Por unidad",
+      "detail": "Con bastón",
+      "pieces": 1,
+      "source": "docs/fotos/2ec4aa1e0046530f421b0d2ba535ff9731e9ea80bd46fb7d481e85b2f3330ebb.webp"
+    },
+    {
+      "kind": "product",
+      "frames": 102,
+      "number": 7,
+      "chapter": 1,
+      "sku": "TM-045",
+      "category": "PAPÁ NOEL · COLECCIÓN",
+      "title": [
+        "Santa",
+        "con su osito."
+      ],
+      "price": 30000,
+      "unit": "Por unidad",
+      "detail": "Traje rojo y verde",
+      "pieces": 1,
+      "source": "docs/fotos/937a552c8baf5f5004a232a91a54b54f1c7bc28c1c48cf38b59f9265bd48d158.webp"
+    },
+    {
+      "kind": "product",
+      "frames": 120,
+      "number": 8,
+      "chapter": 2,
       "sku": "MT-ROJO-REDONDO",
-      "category": "MANTEL NAVIDEÑO",
+      "category": "MANTELES REDONDOS",
       "title": [
         "Una mesa",
         "para celebrar."
@@ -61,8 +172,43 @@
     },
     {
       "kind": "product",
-      "frames": 138,
-      "number": 3,
+      "frames": 120,
+      "number": 9,
+      "chapter": 2,
+      "sku": "MT-BLANCO-LAZOS",
+      "category": "MANTELES · MÁS FORMAS",
+      "title": [
+        "Cuadrados y",
+        "rectangulares."
+      ],
+      "price": 20000,
+      "unit": "Modelo con lazos",
+      "detail": "Blanco y rojo",
+      "pieces": 1,
+      "source": "docs/fotos/d67d0407014500967dc2ec2a8f126683abf10cde6dcc1a431da08f822ae24774.webp"
+    },
+    {
+      "kind": "product",
+      "frames": 120,
+      "number": 10,
+      "chapter": 2,
+      "sku": "MT-PE-NACIMIENTO",
+      "category": "MANTEL DESECHABLE · PE",
+      "title": [
+        "La tradición",
+        "en tu mesa."
+      ],
+      "price": 20000,
+      "unit": "Por unidad",
+      "detail": "Desechable · 220 × 130 cm",
+      "pieces": 1,
+      "source": "docs/fotos/93bedf53f770d1c7ce33dc79d87d1df18aed5937d59510776f60f2160153f789.webp"
+    },
+    {
+      "kind": "product",
+      "frames": 120,
+      "number": 11,
+      "chapter": 3,
       "sku": "FD-AZUL-4",
       "category": "FUNDAS DE COJÍN",
       "title": [
@@ -77,15 +223,16 @@
     },
     {
       "kind": "product",
-      "frames": 138,
-      "number": 4,
+      "frames": 120,
+      "number": 12,
+      "chapter": 3,
       "sku": "TM-005",
       "category": "FUNDAS DE COJÍN",
       "title": [
         "El encanto",
         "de los dorados."
       ],
-      "price": 44900,
+      "price": 20000,
       "unit": "Juego de 4 fundas",
       "detail": "45 × 45 cm",
       "pieces": 4,

@@ -17,6 +17,8 @@ Nombre comercial, presentación e imagen de perfil guardados. Se publicaron siet
 
 Las fotos conservan su composición de estudio y se convirtieron de WebP a JPEG para Instagram. No incluyen precios ni textos añadidos sobre las imágenes de los productos. Cada publicación incluye texto alternativo y la etiqueta de IA; los precios son los del catálogo.
 
+El precio del juego de cuatro fundas doradas (TM-005) se corrigió a $20.000 COP en el catálogo y en el pie de foto de la publicación 06-fundas-1. El cambio se comprobó en Instagram después de guardar y recargar la publicación.
+
 La portada está en `perfil/portada.png` y `perfil/portada.jpg`. Se creó con ImageGen integrado; el prompt se conserva en `perfil/generacion.json`. `plan.json` guarda el orden de las imágenes, el pie de foto, el estado y el enlace de cada publicación.
 
 El [catálogo](https://zhulgon.github.io/Ventas_Navidad/) prepara el pedido del carrito para copiarlo. El comprador abre Instagram, pulsa Mensaje en @navidadbga, pega el pedido y lo envía.

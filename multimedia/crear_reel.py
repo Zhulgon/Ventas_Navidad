@@ -70,18 +70,35 @@ def price(value):
 def make_scenes():
     products = {p['sku']: p for p in json.loads((ROOT / 'docs/catalogo.json').read_text('utf-8'))['products']}
     specs = [
-        ('GN-TRIO', 'MUÑEQUITOS CON LUZ', ['La Navidad', 'empieza en casa.'], 'El trío luminoso', 'También individuales: $10.000'),
-        ('TM-010', 'PAPÁ NOEL VERDE Y DORADO', ['Magia en', 'cada detalle.'], 'Por unidad', 'Verde y dorado'),
-        ('MT-ROJO-REDONDO', 'MANTEL NAVIDEÑO', ['Una mesa', 'para celebrar.'], 'Por unidad', 'Redondo · 150 cm'),
-        ('FD-AZUL-4', 'FUNDAS DE COJÍN', ['Un rincón', 'para soñar.'], 'Juego de 4 fundas', '45 × 45 cm'),
-        ('TM-005', 'FUNDAS DE COJÍN', ['El encanto', 'de los dorados.'], 'Juego de 4 fundas', '45 × 45 cm'),
+        (0, 3.6, 'GN-TRIO', 'MUÑEQUITOS PEQUEÑOS CON LUZ', ['La Navidad', 'empieza en casa.'],
+         'El trío luminoso', 'También individuales: $10.000'),
+        (0, 3.6, 'GN-TEJIDOS', 'GNOMOS GRANDES · SIN LUZ', ['Piernas largas,', 'mucho encanto.'],
+         'Cada gnomo', 'Modelos surtidos · Sin luz'),
+        (1, 3.0, 'TM-010', 'PAPÁ NOEL · COLECCIÓN', ['Verde', 'y dorado.'], 'Por unidad', 'Verde y dorado'),
+        (1, 3.0, 'TM-011', 'PAPÁ NOEL · COLECCIÓN', ['Blanco', 'y dorado.'], 'Por unidad', 'Atuendo dorado'),
+        (1, 3.0, 'TM-012', 'PAPÁ NOEL · COLECCIÓN', ['El encanto', 'del rojo clásico.'], 'Por unidad', 'Traje rojo escocés'),
+        (1, 3.0, 'TM-019', 'PAPÁ NOEL · COLECCIÓN', ['Azul', 'de invierno.'], 'Juego de 2 figuras', 'Azul y blanco'),
+        (1, 3.0, 'TM-046', 'PAPÁ NOEL · COLECCIÓN', ['Gris, rojo', 'y mucho estilo.'], 'Por unidad', 'Con bastón'),
+        (1, 3.0, 'TM-045', 'PAPÁ NOEL · COLECCIÓN', ['Santa', 'con su osito.'], 'Por unidad', 'Traje rojo y verde'),
+        (2, 3.6, 'MT-ROJO-REDONDO', 'MANTELES REDONDOS', ['Una mesa', 'para celebrar.'],
+         'Por unidad', 'Redondo · 150 cm'),
+        (2, 3.6, 'MT-BLANCO-LAZOS', 'MANTELES · MÁS FORMAS', ['Cuadrados y', 'rectangulares.'],
+         'Modelo con lazos', 'Blanco y rojo'),
+        (2, 3.6, 'MT-PE-NACIMIENTO', 'MANTEL DESECHABLE · PE', ['La tradición', 'en tu mesa.'],
+         'Por unidad', 'Desechable · 220 × 130 cm'),
+        (3, 3.6, 'FD-AZUL-4', 'FUNDAS DE COJÍN', ['Un rincón', 'para soñar.'],
+         'Juego de 4 fundas', '45 × 45 cm'),
+        (3, 3.6, 'TM-005', 'FUNDAS DE COJÍN', ['El encanto', 'de los dorados.'],
+         'Juego de 4 fundas', '45 × 45 cm'),
     ]
     assert all(products[sku]['price'] == 10000 for sku in ('GN-DORADO', 'GN-GRIS', 'GN-ROJO'))
+    assert products['TM-005']['price'] == 20000
     scenes = []
-    for number, (sku, category, title, unit, detail) in enumerate(specs):
+    for number, (chapter, seconds, sku, category, title, unit, detail) in enumerate(specs):
         p = products[sku]
         assert p['category'] != 'Figuras anime' and p['price'] > 0
-        scenes.append(dict(kind='product', frames=138, number=number, sku=sku, category=category, title=title,
+        scenes.append(dict(kind='product', frames=round(seconds*FPS)+OVERLAP, number=number,
+                           chapter=chapter, sku=sku, category=category, title=title,
                            price=p['price'], unit=unit, detail=detail, pieces=p['pieces'],
                            source='docs/fotos/' + (p['studio_photo'] or p['photo'])))
     scenes.append(dict(kind='outro', frames=108))
@@ -99,7 +116,7 @@ def plates(scene, picture=None):
         base.paste(strip, (0, 430))
         ImageDraw.Draw(base).rectangle((0, 1510, W, H), fill=tuple(int(v) for v in rows[-1]))
         d = ImageDraw.Draw(base)
-        tracked(d, scene['category'], 170, PINE, 25, 4)
+        tracked(d, scene['category'], 170, PINE, 24, 3)
         for i, line in enumerate(scene['title']):
             centered(d, line, 240 + i*88, 78, DEEP, serif=True)
         d.line((92, 1532, 988, 1532), fill='#baac90', width=2)
@@ -113,10 +130,13 @@ def plates(scene, picture=None):
         if scene['sku'] == 'GN-TRIO':
             centered(d, scene['detail'], 1682, 32, DEEP)
         else:
-            d.text((590, 1618), scene['detail'], font=font(31), fill='#586257')
-        for i in range(5):
-            x = 484+i*28
-            active = i == scene['number']
+            detail_size = 31
+            while d.textlength(scene['detail'], font=font(detail_size)) > 398:
+                detail_size -= 1
+            d.text((590, 1618), scene['detail'], font=font(detail_size), fill='#586257')
+        for i in range(4):
+            x = 498+i*28
+            active = i == scene['chapter']
             d.ellipse((x-4, 1756-4, x+4, 1756+4), fill=PINE if active else '#bcae96')
         centered(d, '@navidadbga', 1790, 29, PINE)
         return base
@@ -216,8 +236,9 @@ def main():
     for i,(scene,plate,photo) in enumerate(prepared):
         frame(scene,plate,photo,scene['frames']//2).save(CACHE/f'{i:02}.jpg',quality=94)
     frame(*prepared[0],69).save(OUT/'portada-reel.jpg',quality=95)
-    manifest=dict(brand='Navidad BGA', edition=2, format='1080×1920, 9:16', fps=FPS, frames=total_frames,
-                  art_direction='Cinco protagonistas; apertura con producto, fotos más grandes, texto breve y precios en una misma posición',
+    manifest=dict(brand='Navidad BGA', edition=3, format='1080×1920, 9:16', fps=FPS, frames=total_frames,
+                  art_direction='Colecciones ordenadas: gnomos pequeños con luz y grandes sin luz; seis modelos de Papá Noel; variedad de manteles; fundas con precio corregido',
+                  chapters=['Muñequitos y gnomos', 'Papá Noel', 'Manteles', 'Fundas'],
                   duration_seconds=duration, transitions='Paso de 12 fotogramas por un fondo liso, sin superponer productos; acercamiento suave sin recortar',
                   audio='Composición instrumental original sintetizada en crear_reel.py; sin samples externos',
                   instagram='https://www.instagram.com/navidadbga/', catalog='https://zhulgon.github.io/Ventas_Navidad/',

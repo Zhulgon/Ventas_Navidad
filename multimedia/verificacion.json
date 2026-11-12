@@ -1,20 +1,20 @@
 {
   "video": "NavidadBGA-reel-estados.mp4",
-  "edition": 2,
+  "edition": 3,
   "source_size": [
     1080,
     1920
   ],
   "codec": "h264",
   "fps": 30.0,
-  "frames": 738,
-  "duration_seconds": 24.6,
-  "audio_integrated_lufs": "-18.13",
+  "frames": 1404,
+  "duration_seconds": 46.8,
+  "audio_integrated_lufs": "-18.08",
   "audio_true_peak_dbtp": "-7.23",
   "decode": "complete_without_errors",
   "silent_version": "verified_without_audio_track",
-  "catalog_prices": "verified_for_all_five_references",
+  "catalog_prices": "verified_for_all_13_references",
   "public_copies": "sha256_identical",
   "streaming": "moov_before_mdat",
-  "sha256": "65138066e7d03a33d70d25a1d29a451b85fb37b8eb1e7657a742dd30233ec26d"
+  "sha256": "fae98d71a5d77b5655bb4d8e63f930801b5ea8d0cf910903897998f8c3085bf2"
 }

@@ -1,7 +1,7 @@
 {
-  "saved_at_utc": "2026-11-11T21:36:08+00:00",
+  "saved_at_utc": "2026-11-12T14:55:05+00:00",
   "inventory": "inventario-inicial.sqlite3",
-  "sha256": "047949530907b8b671510e00fe67cbbd75a07640695bd6f400f83a2d0ae58b9c",
+  "sha256": "ede4ad43ac037ccdf6363868c393c7be03212c6e18dee5bc928cc3b2aa213f5b",
   "tables": {
     "products": 63,
     "photos": 126,
@@ -11,5 +11,9 @@
     "sale_components": 0,
     "bundle_components": 3,
     "settings": 0
+  },
+  "latest_corrections": {
+    "TM-005": "Precio de venta corregido por el usuario: $20.000 el juego de cuatro.",
+    "GN-TEJIDOS": "Gnomos grandes sin luz; se conservan los 10 totales y $10.000 por unidad."
   }
 }

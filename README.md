@@ -23,7 +23,7 @@ La exportación incluye las referencias visibles, sus precios, disponibilidad y 
 
 ## Video para estados y reels
 
-[Ver y descargar el video desde el celular](https://zhulgon.github.io/Ventas_Navidad/reel/). La carpeta `multimedia` conserva el MP4 vertical de 24,6 segundos, la versión sin música, la portada y el guion para volver a generarlo. La edición actual destaca cinco referencias, con fotos más grandes, menos texto y un ritmo más pausado.
+[Ver y descargar el video desde el celular](https://zhulgon.github.io/Ventas_Navidad/reel/). La carpeta `multimedia` conserva el MP4 vertical de 46,8 segundos, la versión sin música, la portada y el guion para volver a generarlo. La edición actual presenta 13 referencias por colecciones: seis modelos de Papá Noel, los dos tipos de gnomos, tres manteles y dos juegos de fundas. El precio del juego de fundas doradas se corrigió a $20.000 COP en el inventario, el catálogo, Instagram y el video.
 
 ## Abrir en Windows
 
