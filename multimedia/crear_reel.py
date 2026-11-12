@@ -10,7 +10,7 @@ import wave
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / '.datos' / 'video-runtime'))
@@ -18,7 +18,7 @@ import imageio_ffmpeg
 
 OUT = ROOT / 'multimedia'
 CACHE = ROOT / '.datos' / 'reel-navidad'
-W, H, FPS, OVERLAP = 1080, 1920, 30, 10
+W, H, FPS, OVERLAP = 1080, 1920, 30, 12
 PAPER, PINE, DEEP, GOLD = '#f7f5ef', '#214a3a', '#17372c', '#e5c387'
 FONTS = Path('C:/Windows/Fonts')
 
@@ -70,49 +70,55 @@ def price(value):
 def make_scenes():
     products = {p['sku']: p for p in json.loads((ROOT / 'docs/catalogo.json').read_text('utf-8'))['products']}
     specs = [
-        ('GN-TRIO', 'MUÑEQUITOS', 'Gnomos luminosos', 'el trío de 3 colores', 'También por unidad: $10.000'),
-        ('GN-TEJIDOS', 'MUÑEQUITOS', 'Gnomos tejidos', 'cada uno', 'Varios modelos para elegir'),
-        ('TM-010', 'MUÑECOS', 'Papá Noel verde y dorado', 'por unidad', ''),
-        ('TM-019', 'MUÑECOS', 'Papá Noel azul y blanco', 'el juego de 2 figuras', ''),
-        ('MT-BLANCO-LAZOS', 'MANTELES', 'Blanco con lazos rojos', 'por unidad', ''),
-        ('MT-RENOS-180', 'MANTELES', 'Navidad de estilo vintage', 'por unidad', 'Redondo · Diámetro 180 cm'),
-        ('FD-AZUL-4', 'FUNDAS', 'Paisajes de invierno', 'el juego de 4 fundas', '45 × 45 cm'),
-        ('TM-001', 'FUNDAS', 'Blanco y dorado', 'el juego de 4 fundas', '45 × 45 cm'),
+        ('GN-TRIO', 'MUÑEQUITOS CON LUZ', ['La Navidad', 'empieza en casa.'], 'El trío luminoso', 'También individuales: $10.000'),
+        ('TM-010', 'PAPÁ NOEL VERDE Y DORADO', ['Magia en', 'cada detalle.'], 'Por unidad', 'Verde y dorado'),
+        ('MT-ROJO-REDONDO', 'MANTEL NAVIDEÑO', ['Una mesa', 'para celebrar.'], 'Por unidad', 'Redondo · 150 cm'),
+        ('FD-AZUL-4', 'FUNDAS DE COJÍN', ['Un rincón', 'para soñar.'], 'Juego de 4 fundas', '45 × 45 cm'),
+        ('TM-005', 'FUNDAS DE COJÍN', ['El encanto', 'de los dorados.'], 'Juego de 4 fundas', '45 × 45 cm'),
     ]
     assert all(products[sku]['price'] == 10000 for sku in ('GN-DORADO', 'GN-GRIS', 'GN-ROJO'))
-    scenes = [dict(kind='intro', frames=45)]
-    for sku, category, title, unit, detail in specs:
+    scenes = []
+    for number, (sku, category, title, unit, detail) in enumerate(specs):
         p = products[sku]
         assert p['category'] != 'Figuras anime' and p['price'] > 0
-        scenes.append(dict(kind='product', frames=90, sku=sku, category=category, title=title,
+        scenes.append(dict(kind='product', frames=138, number=number, sku=sku, category=category, title=title,
                            price=p['price'], unit=unit, detail=detail, pieces=p['pieces'],
                            source='docs/fotos/' + (p['studio_photo'] or p['photo'])))
-    scenes.append(dict(kind='outro', frames=90))
+    scenes.append(dict(kind='outro', frames=108))
     return scenes
 
 
-def plates(scene):
+def plates(scene, picture=None):
     if scene['kind'] == 'product':
-        base = background()
+        # The background comes from the photo itself: no card, frame or competing collage.
+        pixels = np.array(picture.resize((120, 120)), dtype=np.float32)
+        # Extend the studio's edge colors vertically, so the photo has no visible rectangular panel.
+        rows = pixels[:, [0, 1, 2, -3, -2, -1], :].mean(axis=1).astype(np.uint8)
+        base = Image.new('RGB', (W, H), tuple(int(v) for v in rows[0]))
+        strip = Image.fromarray(rows[:, None, :]).resize((W, 1080), Image.Resampling.BILINEAR)
+        base.paste(strip, (0, 430))
+        ImageDraw.Draw(base).rectangle((0, 1510, W, H), fill=tuple(int(v) for v in rows[-1]))
         d = ImageDraw.Draw(base)
-        star(d, 111, 184, 27, PINE)
-        d.text((164, 151), 'Navidad BGA', font=font(47, bold=True), fill=PINE)
-        d.line((80, 248, 1000, 248), fill='#d7d4c8', width=2)
-        tracked(d, scene['category'], 290, PINE)
-        centered(d, scene['title'], 351, 58, DEEP, serif=True)
-
-        shadow = Image.new('RGBA', (W, H))
-        ImageDraw.Draw(shadow).rounded_rectangle((70, 455, 1010, 1395), radius=30, fill=(40, 53, 40, 35))
-        shadow = shadow.filter(ImageFilter.GaussianBlur(22))
-        base = Image.alpha_composite(base.convert('RGBA'), shadow).convert('RGB')
-        d = ImageDraw.Draw(base)
-        d.rounded_rectangle((70, 435, 1010, 1375), radius=30, fill='#fffefa')
-        centered(d, price(scene['price']), 1430, 80, PINE, bold=True)
-        centered(d, scene['unit'], 1537, 38, DEEP)
-        if scene['detail']:
-            centered(d, scene['detail'], 1601, 29, '#626d65')
-        d.line((270, 1681, 810, 1681), fill='#c8c7ba', width=2)
-        centered(d, '@navidadbga', 1725, 35, PINE, bold=True)
+        tracked(d, scene['category'], 170, PINE, 25, 4)
+        for i, line in enumerate(scene['title']):
+            centered(d, line, 240 + i*88, 78, DEEP, serif=True)
+        d.line((92, 1532, 988, 1532), fill='#baac90', width=2)
+        face = font(86, bold=True)
+        value = price(scene['price'])
+        box = d.textbbox((0, 0), value, font=face)
+        d.text((92, 1568-box[1]), value, font=face, fill=PINE)
+        # Presentation stays beside the price; "fundas" and the trio/unit distinction remain explicit.
+        unit_size = 34 if scene['sku'] != 'GN-TRIO' else 35
+        d.text((590, 1565), scene['unit'], font=font(unit_size, bold=True), fill=DEEP)
+        if scene['sku'] == 'GN-TRIO':
+            centered(d, scene['detail'], 1682, 32, DEEP)
+        else:
+            d.text((590, 1618), scene['detail'], font=font(31), fill='#586257')
+        for i in range(5):
+            x = 484+i*28
+            active = i == scene['number']
+            d.ellipse((x-4, 1756-4, x+4, 1756+4), fill=PINE if active else '#bcae96')
+        centered(d, '@navidadbga', 1790, 29, PINE)
         return base
 
     base = background(dark=True)
@@ -120,28 +126,15 @@ def plates(scene):
     for cx, cy, r in [(W + 60, 250, 340), (-160, 1660, 360)]:
         d.ellipse((cx-r, cy-r, cx+r, cy+r), outline='#46624c', width=2)
         d.ellipse((cx-r+30, cy-r+30, cx+r-30, cy+r-30), outline='#3e5c46', width=2)
-    star(d, 540, 216, 30, GOLD)
-    tracked(d, 'NAVIDAD BGA', 280, '#f0d9ae', 30, 7)
-    if scene['kind'] == 'intro':
-        cover = Image.open(ROOT / 'instagram/perfil/portada.jpg').convert('RGB').resize((700, 700), Image.Resampling.LANCZOS)
-        mask = Image.new('L', (700, 700))
-        ImageDraw.Draw(mask).ellipse((0, 0, 699, 699), fill=255)
-        base.paste(cover, (190, 425), mask)
-        d = ImageDraw.Draw(base)
-        centered(d, 'Pequeños detalles,', 1220, 77, '#fff7e6', serif=True)
-        centered(d, 'grandes fiestas.', 1325, 77, '#fff7e6', serif=True)
-        centered(d, 'Bucaramanga', 1510, 35, '#dfd8c6')
-        centered(d, '@navidadbga', 1630, 40, '#f0d9ae', bold=True)
-    else:
-        centered(d, 'Elige tus favoritos.', 540, 83, '#fff7e6', serif=True)
-        centered(d, 'Haz tu pedido por mensaje', 690, 42, '#dfd8c6')
-        centered(d, 'Instagram', 925, 37, '#f0d9ae')
-        centered(d, '@navidadbga', 1000, 76, '#fff7e6', bold=True)
-        d.rounded_rectangle((75, 1215, 1005, 1410), radius=24, fill='#f7f5ef')
-        tracked(d, 'CATÁLOGO', 1244, PINE, 25, 5)
-        centered(d, 'zhulgon.github.io/Ventas_Navidad/', 1314, 36, PINE, bold=True)
-        centered(d, 'Bucaramanga', 1530, 35, '#dfd8c6')
-        centered(d, 'Consulta disponibilidad', 1605, 29, '#dfd8c6')
+    star(d, 540, 288, 38, GOLD)
+    tracked(d, 'NAVIDAD BGA', 380, '#f0d9ae', 30, 7)
+    centered(d, 'Que tu casa', 640, 84, '#fff7e6', serif=True)
+    centered(d, 'se sienta Navidad.', 752, 84, '#fff7e6', serif=True)
+    d.line((450, 968, 630, 968), fill=GOLD, width=3)
+    centered(d, '@navidadbga', 1110, 78, '#fff7e6', bold=True)
+    centered(d, 'Pedidos por mensaje', 1226, 40, '#f0d9ae')
+    centered(d, 'Bucaramanga', 1515, 34, '#dfd8c6')
+    centered(d, 'Consulta disponibilidad · Precios en COP', 1580, 28, '#dfd8c6')
     return base
 
 
@@ -150,9 +143,14 @@ def frame(scene, plate, picture, index):
     if picture is not None:
         t = index / (scene['frames'] - 1)
         eased = .5 - .5 * math.cos(math.pi * t)
-        size = round(875 + 25 * eased)
+        size = round(1040 + 40 * eased)
         image = picture.resize((size, size), Image.Resampling.LANCZOS)
-        result.paste(image, ((W-size)//2, 455+(900-size)//2))
+        # Feather only the outer eight pixels of the studio background, leaving products complete.
+        mask = Image.new('L', (size, size), 0)
+        md = ImageDraw.Draw(mask)
+        for edge in range(9):
+            md.rectangle((edge, edge, size-1-edge, size-1-edge), fill=round(255*edge/8))
+        result.paste(image, ((W-size)//2, 430+(1080-size)//2), mask)
     return result
 
 
@@ -213,13 +211,14 @@ def main():
     prepared=[]
     for scene in scenes:
         photo=Image.open(ROOT/scene['source']).convert('RGB') if scene['kind']=='product' else None
-        plate=plates(scene)
+        plate=plates(scene, photo)
         prepared.append((scene,plate,photo))
     for i,(scene,plate,photo) in enumerate(prepared):
         frame(scene,plate,photo,scene['frames']//2).save(CACHE/f'{i:02}.jpg',quality=94)
-    frame(*prepared[1],45).save(OUT/'portada-reel.jpg',quality=95)
-    manifest=dict(brand='Navidad BGA', format='1080×1920, 9:16', fps=FPS, frames=total_frames,
-                  duration_seconds=duration, transitions='Fundidos de 10 fotogramas y acercamiento suave sin recortar el producto',
+    frame(*prepared[0],69).save(OUT/'portada-reel.jpg',quality=95)
+    manifest=dict(brand='Navidad BGA', edition=2, format='1080×1920, 9:16', fps=FPS, frames=total_frames,
+                  art_direction='Cinco protagonistas; apertura con producto, fotos más grandes, texto breve y precios en una misma posición',
+                  duration_seconds=duration, transitions='Paso de 12 fotogramas por un fondo liso, sin superponer productos; acercamiento suave sin recortar',
                   audio='Composición instrumental original sintetizada en crear_reel.py; sin samples externos',
                   instagram='https://www.instagram.com/navidadbga/', catalog='https://zhulgon.github.io/Ventas_Navidad/',
                   scenes=scenes)
@@ -239,21 +238,33 @@ def main():
     with log.open('wb') as errors:
         process=subprocess.Popen(command,stdin=subprocess.PIPE,stderr=errors)
         tail=[]
+        previous_plate=None
         written=0
         try:
             for number,(scene,plate,photo) in enumerate(prepared):
                 next_tail=[]
+                bridge=None
+                if previous_plate is not None:
+                    color=tuple(round((a+b)/2) for a,b in zip(previous_plate.getpixel((0,0)),plate.getpixel((0,0))))
+                    bridge=Image.new('RGB',(W,H),color)
                 for i in range(scene['frames']):
                     current=frame(scene,plate,photo,i)
                     if tail and i<OVERLAP:
-                        weight=.5-.5*math.cos(math.pi*(i+1)/(OVERLAP+1))
-                        current=Image.blend(tail[i],current,weight)
+                        # Fade through one calm color; two products and two prices never overlap.
+                        half=OVERLAP//2
+                        if i<half:
+                            weight=.5-.5*math.cos(math.pi*(i+1)/half)
+                            current=Image.blend(tail[i],bridge,weight)
+                        else:
+                            weight=.5-.5*math.cos(math.pi*(i-half+1)/half)
+                            current=Image.blend(bridge,current,weight)
                     elif i>=scene['frames']-OVERLAP:
                         next_tail.append(current)
                         continue
                     process.stdin.write(current.tobytes())
                     written+=1
                 tail=next_tail
+                previous_plate=plate
                 print(f'Escena {number+1}/{len(prepared)}: {scene.get("sku",scene["kind"])}',flush=True)
             for current in tail:
                 process.stdin.write(current.tobytes())

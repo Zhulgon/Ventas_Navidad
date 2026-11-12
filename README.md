@@ -23,7 +23,7 @@ La exportación incluye las referencias visibles, sus precios, disponibilidad y 
 
 ## Video para estados y reels
 
-[Ver y descargar el video desde el celular](https://zhulgon.github.io/Ventas_Navidad/reel/). La carpeta `multimedia` conserva el MP4 vertical de 25,5 segundos, la versión sin música, la portada y el guion para volver a generarlo.
+[Ver y descargar el video desde el celular](https://zhulgon.github.io/Ventas_Navidad/reel/). La carpeta `multimedia` conserva el MP4 vertical de 24,6 segundos, la versión sin música, la portada y el guion para volver a generarlo. La edición actual destaca cinco referencias, con fotos más grandes, menos texto y un ritmo más pausado.
 
 ## Abrir en Windows
 

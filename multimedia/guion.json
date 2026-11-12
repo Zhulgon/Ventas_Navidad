@@ -1,117 +1,99 @@
 {
   "brand": "Navidad BGA",
+  "edition": 2,
   "format": "1080×1920, 9:16",
   "fps": 30,
-  "frames": 765,
-  "duration_seconds": 25.5,
-  "transitions": "Fundidos de 10 fotogramas y acercamiento suave sin recortar el producto",
+  "frames": 738,
+  "art_direction": "Cinco protagonistas; apertura con producto, fotos más grandes, texto breve y precios en una misma posición",
+  "duration_seconds": 24.6,
+  "transitions": "Paso de 12 fotogramas por un fondo liso, sin superponer productos; acercamiento suave sin recortar",
   "audio": "Composición instrumental original sintetizada en crear_reel.py; sin samples externos",
   "instagram": "https://www.instagram.com/navidadbga/",
   "catalog": "https://zhulgon.github.io/Ventas_Navidad/",
   "scenes": [
     {
-      "kind": "intro",
-      "frames": 45
-    },
-    {
       "kind": "product",
-      "frames": 90,
+      "frames": 138,
+      "number": 0,
       "sku": "GN-TRIO",
-      "category": "MUÑEQUITOS",
-      "title": "Gnomos luminosos",
+      "category": "MUÑEQUITOS CON LUZ",
+      "title": [
+        "La Navidad",
+        "empieza en casa."
+      ],
       "price": 25000,
-      "unit": "el trío de 3 colores",
-      "detail": "También por unidad: $10.000",
+      "unit": "El trío luminoso",
+      "detail": "También individuales: $10.000",
       "pieces": 3,
       "source": "docs/fotos/0a2d4cdf2a0428796007b6db98150fdab42162e68aa56020ed25ece57fb2fccf.webp"
     },
     {
       "kind": "product",
-      "frames": 90,
-      "sku": "GN-TEJIDOS",
-      "category": "MUÑEQUITOS",
-      "title": "Gnomos tejidos",
-      "price": 10000,
-      "unit": "cada uno",
-      "detail": "Varios modelos para elegir",
-      "pieces": 1,
-      "source": "docs/fotos/adefc381c328e481d1563fba94eeee1efed9aabe9849ef502f5e33c57a8212ff.webp"
-    },
-    {
-      "kind": "product",
-      "frames": 90,
+      "frames": 138,
+      "number": 1,
       "sku": "TM-010",
-      "category": "MUÑECOS",
-      "title": "Papá Noel verde y dorado",
+      "category": "PAPÁ NOEL VERDE Y DORADO",
+      "title": [
+        "Magia en",
+        "cada detalle."
+      ],
       "price": 35000,
-      "unit": "por unidad",
-      "detail": "",
+      "unit": "Por unidad",
+      "detail": "Verde y dorado",
       "pieces": 1,
       "source": "docs/fotos/20fb3013ea2187e0f5f86e0b078eefd882f7ca7d5f199f2e4e668dc8cbd4d5b8.webp"
     },
     {
       "kind": "product",
-      "frames": 90,
-      "sku": "TM-019",
-      "category": "MUÑECOS",
-      "title": "Papá Noel azul y blanco",
-      "price": 45000,
-      "unit": "el juego de 2 figuras",
-      "detail": "",
-      "pieces": 2,
-      "source": "docs/fotos/edd97e0e3610bbc85475745f7ae2c4e96a8d1c02324a8f279257973ec16da688.webp"
-    },
-    {
-      "kind": "product",
-      "frames": 90,
-      "sku": "MT-BLANCO-LAZOS",
-      "category": "MANTELES",
-      "title": "Blanco con lazos rojos",
+      "frames": 138,
+      "number": 2,
+      "sku": "MT-ROJO-REDONDO",
+      "category": "MANTEL NAVIDEÑO",
+      "title": [
+        "Una mesa",
+        "para celebrar."
+      ],
       "price": 20000,
-      "unit": "por unidad",
-      "detail": "",
+      "unit": "Por unidad",
+      "detail": "Redondo · 150 cm",
       "pieces": 1,
-      "source": "docs/fotos/d67d0407014500967dc2ec2a8f126683abf10cde6dcc1a431da08f822ae24774.webp"
+      "source": "docs/fotos/12e39cce510447a9d5d8372fa66a399b550c8dab0ca8beaca028d79e5494b428.webp"
     },
     {
       "kind": "product",
-      "frames": 90,
-      "sku": "MT-RENOS-180",
-      "category": "MANTELES",
-      "title": "Navidad de estilo vintage",
-      "price": 20000,
-      "unit": "por unidad",
-      "detail": "Redondo · Diámetro 180 cm",
-      "pieces": 1,
-      "source": "docs/fotos/3458e5c37f27c1752e32f4300c4ba918e2f184e64177bb0b890b77e36e0b4b77.webp"
-    },
-    {
-      "kind": "product",
-      "frames": 90,
+      "frames": 138,
+      "number": 3,
       "sku": "FD-AZUL-4",
-      "category": "FUNDAS",
-      "title": "Paisajes de invierno",
+      "category": "FUNDAS DE COJÍN",
+      "title": [
+        "Un rincón",
+        "para soñar."
+      ],
       "price": 20000,
-      "unit": "el juego de 4 fundas",
+      "unit": "Juego de 4 fundas",
       "detail": "45 × 45 cm",
       "pieces": 4,
       "source": "docs/fotos/729a68e11aeb215cfbd1b075f3123fb34b290ee639d2e8e7afec4f877fbc1083.webp"
     },
     {
       "kind": "product",
-      "frames": 90,
-      "sku": "TM-001",
-      "category": "FUNDAS",
-      "title": "Blanco y dorado",
-      "price": 20000,
-      "unit": "el juego de 4 fundas",
+      "frames": 138,
+      "number": 4,
+      "sku": "TM-005",
+      "category": "FUNDAS DE COJÍN",
+      "title": [
+        "El encanto",
+        "de los dorados."
+      ],
+      "price": 44900,
+      "unit": "Juego de 4 fundas",
       "detail": "45 × 45 cm",
       "pieces": 4,
-      "source": "docs/fotos/631eefc7feb12551e34b9593dc3f507473dd1dea4be03ff9d00464f2390d83ee.webp"
+      "source": "docs/fotos/744d225de7247484c5a484db5e3fdb9ae2d2643f1fec593d4352b6288540931d.webp"
     },
     {
       "kind": "outro",
-      "frames": 90
+      "frames": 108
     }
   ]
 }
