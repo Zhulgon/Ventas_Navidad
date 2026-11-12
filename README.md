@@ -8,6 +8,8 @@ Enlace para compartir: [Cosas Navideñas](https://zhulgon.github.io/Ventas_Navid
 
 GitHub Pages publica la carpeta `docs` de la rama `main`. El catálogo permite buscar, revisar fotos y precios, armar una selección y compartirla. Funciona aunque el equipo esté apagado. Las compras se acuerdan con el vendedor; seleccionar artículos no reserva existencias.
 
+En **Mi selección → Pedir por Instagram**, el cliente obtiene un mensaje con los artículos, códigos, cantidades, precios y total. El resumen se copia y el botón **Abrir Instagram** lleva a `@navidadbga`; el cliente pulsa **Mensaje**, pega el pedido y lo envía. Si el navegador bloquea el portapapeles, puede copiar el texto manualmente. El carrito se conserva y la venta se registra en el panel cuando se confirme la compra.
+
 El panel de gestión y el registro de ventas funcionan en la plataforma local. La web muestra el inventario de la última publicación. Para actualizarla después de cambiar precios, fotos o existencias, ejecuta desde esta carpeta:
 
 ```powershell

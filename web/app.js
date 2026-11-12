@@ -3,7 +3,8 @@ const dialog = document.querySelector('#dialog');
 const notice = document.querySelector('#notice');
 const publicSite = Boolean(window.COSAS_NAVIDENAS?.publicCatalog);
 const customer = publicSite || location.pathname === '/catalogo';
-const catalogUrl = () => new URL(publicSite ? './' : '/catalogo', location.href).href;
+const instagramShop = { handle: 'navidadbga', profile: 'https://www.instagram.com/navidadbga/' };
+const catalogUrl = () => 'https://zhulgon.github.io/Ventas_Navidad/';
 const currency = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 const count = new Intl.NumberFormat('es-CO');
 const date = new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'America/Bogota' });
@@ -32,6 +33,7 @@ const icons = {
   image: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15" cy="8" r="1"/>',
   sparkle: '<path d="M12 2v20M2 12h20M5 5l14 14m0-14L5 19"/>',
   share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m9 10.5 6-4m-6 7 6 4"/>',
+  instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>',
 };
 const icon = name => `<svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">${icons[name]}</svg>`;
 function photo(p, css = '', original = false) {
@@ -252,12 +254,33 @@ function saveSelection() {
 }
 function summaryText(items) {
   const total = sum(items, p => p.price * p.qty);
-  return ['Hola, quisiera consultar por estos artículos de Cosas Navideñas:', '', ...items.map(p => `${p.qty} × ${p.name} (${p.sku}) — ${money(p.qty * p.price)}`), '', `Total de la selección: ${money(total)} COP`].join('\n');
+  return ['Hola, Navidad BGA. Quisiera hacer este pedido:', '', ...items.map(p => `${p.qty} × ${p.name} (${p.sku})\n${money(p.price)} / ${unitName(p)} · Subtotal: ${money(p.qty * p.price)}`), '', `Total del pedido: ${money(total)} COP`, '', '¿Me confirmas disponibilidad y cómo coordinar la entrega?', `Catálogo: ${catalogUrl()}`].join('\n');
 }
 function selectionDialog() {
   const items = selectedItems();
   const whatsapp = data.whatsapp ? `https://wa.me/${data.whatsapp}?text=${encodeURIComponent(summaryText(items))}` : '';
-  openDialog('Mi selección', items.length ? `<div class="selection-list">${items.map(p => `<div>${photo(p, 'thumb')}<span><strong>${escape(p.name)}</strong><small>${money(p.price)} / ${unitName(p)}</small></span><label><span class="visually-hidden">Cantidad de ${escape(p.name)}</span><input type="number" min="1" max="${selectionLimit(p)}" value="${p.qty}" data-selection="${escape(p.sku)}"></label><button class="icon-button" data-act="remove" data-id="${escape(p.sku)}" aria-label="Quitar ${escape(p.name)}">${icon('close')}</button></div>`).join('')}</div><div class="selection-total"><span>Total estimado</span><strong>${money(sum(items, p => p.price * p.qty))}</strong></div><p class="form-help">Comparte esta lista para confirmar disponibilidad y acordar la compra.</p><div class="form-actions"><button class="button outline" data-act="copy">Copiar selección</button><button class="button primary" data-act="share-selection">${icon('share')} Compartir selección</button>${whatsapp ? `<a class="button primary" href="${escape(whatsapp)}" target="_blank" rel="noopener">Abrir WhatsApp ${icon('external')}</a>` : ''}</div>` : '<p class="empty">Tu selección está vacía. Agrega artículos con precio y disponibilidad desde la colección.</p>', 'CATÁLOGO');
+  openDialog('Mi selección', items.length ? `<div class="selection-list">${items.map(p => `<div>${photo(p, 'thumb')}<span><strong>${escape(p.name)}</strong><small>${money(p.price)} / ${unitName(p)}</small></span><label><span class="visually-hidden">Cantidad de ${escape(p.name)}</span><input type="number" min="1" max="${selectionLimit(p)}" value="${p.qty}" data-selection="${escape(p.sku)}"></label><button class="icon-button" data-act="remove" data-id="${escape(p.sku)}" aria-label="Quitar ${escape(p.name)}">${icon('close')}</button></div>`).join('')}</div><div class="selection-total"><span>Total estimado</span><strong>${money(sum(items, p => p.price * p.qty))}</strong></div><p class="form-help">Prepara tu pedido y envíalo por mensaje a @${instagramShop.handle} para confirmar disponibilidad y acordar la compra.</p><div class="form-actions"><button class="button outline" data-act="copy">Copiar pedido</button><button class="button outline" data-act="share-selection">${icon('share')} Compartir</button><button class="button primary" data-act="instagram-order">${icon('instagram')} Pedir por Instagram</button>${whatsapp ? `<a class="button outline" href="${escape(whatsapp)}" target="_blank" rel="noopener">Abrir WhatsApp ${icon('external')}</a>` : ''}</div>` : '<p class="empty">Tu selección está vacía. Agrega artículos con precio y disponibilidad desde la colección.</p>', 'CATÁLOGO');
+}
+
+async function copyInstagramOrder() {
+  const field = document.querySelector('#instagram-order-text');
+  const status = document.querySelector('#instagram-order-status');
+  if (!field || !status) return;
+  try {
+    await navigator.clipboard.writeText(field.value);
+    status.textContent = 'Pedido copiado. Abre Instagram, pulsa Mensaje, pega el pedido y pulsa Enviar.';
+  } catch {
+    field.focus();
+    field.select();
+    status.textContent = 'Seleccionamos el pedido. Cópialo manualmente y pégalo en el chat de Instagram.';
+  }
+}
+
+async function instagramOrderDialog() {
+  const items = selectedItems();
+  if (!items.length) return selectionDialog();
+  openDialog('Tu pedido para Navidad BGA', `<p class="order-intro">Copia este resumen, abre <strong>@${instagramShop.handle}</strong> y pulsa <strong>Mensaje</strong>. Pega el pedido en el chat y envíalo.</p><label class="field"><span>Resumen del pedido</span><textarea id="instagram-order-text" readonly rows="9">${escape(summaryText(items))}</textarea></label><p id="instagram-order-status" class="order-copy-status" role="status" aria-live="polite"></p><div class="form-actions"><button class="button outline" data-act="selection">Volver al carrito</button><button class="button outline" data-act="copy-instagram-order">Copiar pedido</button><a class="button primary" href="${instagramShop.profile}" target="_blank" rel="noopener">${icon('instagram')} Abrir Instagram ${icon('external')}</a></div><p class="order-help">Si Instagram te pide iniciar sesión, entra en tu cuenta. Confirmaremos la disponibilidad y los detalles de la compra por el chat.</p>`, 'PEDIDO POR INSTAGRAM');
+  await copyInstagramOrder();
 }
 
 async function busy(button, job) {
@@ -321,6 +344,8 @@ async function handleAction(event) {
   if (act === 'settings') settingsDialog();
   if (act === 'close') dialog.close();
   if (act === 'selection') selectionDialog();
+  if (act === 'instagram-order') await instagramOrderDialog();
+  if (act === 'copy-instagram-order') await copyInstagramOrder();
   if (act === 'share-catalog' || act === 'share-selection') {
     const text = act === 'share-selection' ? summaryText(selectedItems()) : 'Mira la colección de Cosas Navideñas';
     try {
@@ -364,7 +389,7 @@ async function handleAction(event) {
     try {
       await navigator.clipboard.writeText(text);
       dialog.close();
-      toast('Selección copiada.');
+      toast('Pedido copiado.');
     } catch {
       openDialog('Copia tu selección', `<label class="field"><span>Resumen del pedido</span><textarea readonly rows="8">${escape(text)}</textarea></label>`);
       dialog.querySelector('textarea').select();
