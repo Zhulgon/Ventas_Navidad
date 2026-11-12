@@ -25,6 +25,8 @@ La exportación incluye las referencias visibles, sus precios, disponibilidad y 
 
 [Ver y descargar el video desde el celular](https://zhulgon.github.io/Ventas_Navidad/reel/). La carpeta `multimedia` conserva el MP4 vertical de 46,8 segundos, la versión sin música, la portada y el guion para volver a generarlo. La edición actual presenta 13 referencias por colecciones: seis modelos de Papá Noel, los dos tipos de gnomos, tres manteles y dos juegos de fundas. El precio del juego de fundas doradas se corrigió a $20.000 COP en el inventario, el catálogo, Instagram y el video.
 
+El video con música pesa 9,57 MB y la versión sin música, 8,79 MB. Ambos conservan el Full HD y están por debajo del máximo de 10 MB.
+
 ## Abrir en Windows
 
 Ejecuta `Abrir plataforma.cmd`. Requiere Python 3.10 o posterior y abre [el panel](http://127.0.0.1:8131/) en el navegador. Mantén abierta la consola mientras uses la plataforma. También puedes iniciar desde PowerShell con `py -3 plataforma.py --abrir`.

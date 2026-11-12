@@ -19,6 +19,7 @@ import imageio_ffmpeg
 OUT = ROOT / 'multimedia'
 CACHE = ROOT / '.datos' / 'reel-navidad'
 W, H, FPS, OVERLAP = 1080, 1920, 30, 12
+MAX_BYTES, TARGET_BYTES, AUDIO_BITRATE = 10_000_000, 9_600_000, 128_000
 PAPER, PINE, DEEP, GOLD = '#f7f5ef', '#214a3a', '#17372c', '#e5c387'
 FONTS = Path('C:/Windows/Fonts')
 
@@ -219,6 +220,26 @@ def soundtrack(seconds, filename):
         wav.writeframes((np.clip(samples,-1,1)*32767).astype('<i2').tobytes())
 
 
+def encode_for_sharing(executable, master, output, duration):
+    """Two-pass H.264 from a lossless master; reserve room for audio and MP4 headers."""
+    video_bitrate = math.floor(((TARGET_BYTES-100_000)*8/duration-AUDIO_BITRATE)/1000)*1000
+    if video_bitrate <= 0:
+        raise ValueError('La duración no permite exportar con este límite de peso.')
+    command = [executable, '-hide_banner', '-loglevel', 'error', '-y', '-i', str(master),
+               '-map', '0:v:0', '-an', '-c:v', 'libx264', '-preset', 'slow', '-tune', 'stillimage',
+               '-b:v', str(video_bitrate), '-maxrate', str(video_bitrate*2),
+               '-bufsize', str(video_bitrate*4), '-pix_fmt', 'yuv420p', '-threads', '4',
+               '-profile:v', 'high', '-level:v', '4.1', '-colorspace', 'bt709',
+               '-color_primaries', 'bt709', '-color_trc', 'bt709',
+               '-passlogfile', str(CACHE/'compresion-dos-pasadas')]
+    print(f'Compresión Full HD en dos pasadas: {video_bitrate//1000} kb/s de video.', flush=True)
+    subprocess.run(command+['-pass', '1', '-f', 'null', '-'], stdout=subprocess.DEVNULL, check=True)
+    print('Primera pasada completa; optimizando el archivo final.', flush=True)
+    subprocess.run(command+['-pass', '2', '-movflags', '+faststart', str(output)], check=True)
+    assert output.stat().st_size < MAX_BYTES, 'La versión sin música supera 10 MB.'
+    return video_bitrate
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--preview',action='store_true')
@@ -239,6 +260,9 @@ def main():
     manifest=dict(brand='Navidad BGA', edition=3, format='1080×1920, 9:16', fps=FPS, frames=total_frames,
                   art_direction='Colecciones ordenadas: gnomos pequeños con luz y grandes sin luz; seis modelos de Papá Noel; variedad de manteles; fundas con precio corregido',
                   chapters=['Muñequitos y gnomos', 'Papá Noel', 'Manteles', 'Fundas'],
+                  encoding=dict(max_bytes=MAX_BYTES, target_bytes=TARGET_BYTES,
+                                method='H.264 en dos pasadas desde máster sin pérdida', preset='slow',
+                                resolution_unchanged=True, audio_bitrate=AUDIO_BITRATE),
                   duration_seconds=duration, transitions='Paso de 12 fotogramas por un fondo liso, sin superponer productos; acercamiento suave sin recortar',
                   audio='Composición instrumental original sintetizada en crear_reel.py; sin samples externos',
                   instagram='https://www.instagram.com/navidadbga/', catalog='https://zhulgon.github.io/Ventas_Navidad/',
@@ -249,13 +273,13 @@ def main():
         return
     executable=imageio_ffmpeg.get_ffmpeg_exe()
     silent=OUT/'NavidadBGA-vertical-sin-musica.mp4'
+    master=CACHE/'master-sin-perdida.mkv'
     log=CACHE/'render.log'
     command=[executable,'-hide_banner','-loglevel','warning','-y','-f','rawvideo','-vcodec','rawvideo',
              '-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','pipe:0','-an',
              '-vf','scale=out_color_matrix=bt709:out_range=tv',
-             '-c:v','libx264','-preset','medium','-crf','19','-pix_fmt','yuv420p','-threads','4',
-             '-profile:v','high','-level:v','4.1','-colorspace','bt709','-color_primaries','bt709','-color_trc','bt709',
-             '-movflags','+faststart',str(silent)]
+             '-c:v','libx264','-preset','veryfast','-crf','0','-pix_fmt','yuv420p','-threads','4',
+             '-colorspace','bt709','-color_primaries','bt709','-color_trc','bt709',str(master)]
     with log.open('wb') as errors:
         process=subprocess.Popen(command,stdin=subprocess.PIPE,stderr=errors)
         tail=[]
@@ -299,17 +323,22 @@ def main():
                 process.terminate()
                 process.wait()
         assert written==total_frames,(written,total_frames)
+    video_bitrate=encode_for_sharing(executable,master,silent,duration)
     wav=CACHE/'musica-original.wav'
     soundtrack(duration,wav)
     target=OUT/'NavidadBGA-reel-estados.mp4'
     subprocess.run([executable,'-hide_banner','-loglevel','error','-y','-i',str(silent),'-i',str(wav),
-                    '-map','0:v:0','-map','1:a:0','-c:v','copy','-c:a','aac','-b:a','128k',
+                    '-map','0:v:0','-map','1:a:0','-c:v','copy','-c:a','aac','-b:a',str(AUDIO_BITRATE),
                     '-af','loudnorm=I=-18:TP=-1.5:LRA=9','-shortest','-movflags','+faststart',str(target)],check=True)
+    assert target.stat().st_size < MAX_BYTES, 'El video con música supera 10 MB.'
+    manifest['encoding'].update(video_bitrate=video_bitrate,
+                                main_bytes=target.stat().st_size, silent_bytes=silent.stat().st_size)
+    (OUT/'guion.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     public=ROOT/'docs/reel'
     public.mkdir(parents=True,exist_ok=True)
     for asset in (target,silent,OUT/'portada-reel.jpg'):
         shutil.copyfile(asset,public/asset.name)
-    print(f'Listo: {target} ({duration:.1f} segundos).',flush=True)
+    print(f'Listo: {target} ({duration:.1f} segundos; {target.stat().st_size/1_000_000:.2f} MB).',flush=True)
 
 
 if __name__=='__main__':

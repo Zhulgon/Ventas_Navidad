@@ -2,8 +2,8 @@
 
 Video vertical de 46,8 segundos en 1080 × 1920, 30 fps, MP4 H.264. Esta tercera edición muestra 13 referencias agrupadas en cuatro colecciones: los pequeños gnomos luminosos y los grandes tejidos sin luz; seis modelos de Papá Noel; variedad de manteles redondos, para mesas cuadradas o rectangulares y el desechable de PE; y dos juegos de fundas. El juego de fundas doradas tiene el precio corregido por el usuario: $20.000 COP. Los demás precios se toman del catálogo al crear el video. Las figuras de anime están excluidas.
 
-- `NavidadBGA-reel-estados.mp4`: versión con música instrumental original de campanillas y acordes suaves, sin voz.
-- `NavidadBGA-vertical-sin-musica.mp4`: misma edición, sin pista de audio, para añadir otra música al compartir.
+- `NavidadBGA-reel-estados.mp4`: 9,57 MB (9.573.796 bytes), con música instrumental original de campanillas y acordes suaves, sin voz.
+- `NavidadBGA-vertical-sin-musica.mp4`: 8,79 MB (8.787.757 bytes), misma edición sin pista de audio, para añadir otra música al compartir.
 - `portada-reel.jpg`: imagen vertical para la portada.
 - `pie-de-foto.txt`: texto sugerido para acompañarlo.
 - `guion.json`: escenas, fotos de origen y precios.
@@ -16,6 +16,8 @@ Abre directamente con los muñequitos luminosos. Papá Noel tiene el mayor núme
 ## Volver a generar
 
 Requiere Python, las dependencias de `requirements.txt` y las fuentes Georgia y Segoe UI de Windows. El script toma las fotos y los precios de `docs/catalogo.json` y actualiza también los archivos de `docs/reel`.
+
+La exportación genera un máster temporal sin pérdida y comprime el video H.264 en dos pasadas, con el ajuste lento para imágenes. Calcula el presupuesto de video según la duración y reserva espacio para la música y la cabecera MP4. Verifica que ambas versiones pesen menos de 10.000.000 bytes antes de copiarlas a la web. Se conservan la resolución 1080 × 1920, los 30 fps, la duración y la pista musical. La comparación con la versión anterior obtuvo SSIM 0,99472; los datos de verificación y los tamaños exactos están en `verificacion.json`.
 
 ```powershell
 py -3 -m pip install -r multimedia/requirements.txt

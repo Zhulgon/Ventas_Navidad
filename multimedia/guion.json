@@ -11,6 +11,17 @@
     "Manteles",
     "Fundas"
   ],
+  "encoding": {
+    "max_bytes": 10000000,
+    "target_bytes": 9600000,
+    "method": "H.264 en dos pasadas desde máster sin pérdida",
+    "preset": "slow",
+    "resolution_unchanged": true,
+    "audio_bitrate": 128000,
+    "video_bitrate": 1495000,
+    "main_bytes": 9573796,
+    "silent_bytes": 8787757
+  },
   "duration_seconds": 46.8,
   "transitions": "Paso de 12 fotogramas por un fondo liso, sin superponer productos; acercamiento suave sin recortar",
   "audio": "Composición instrumental original sintetizada en crear_reel.py; sin samples externos",

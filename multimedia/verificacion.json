@@ -16,5 +16,15 @@
   "catalog_prices": "verified_for_all_13_references",
   "public_copies": "sha256_identical",
   "streaming": "moov_before_mdat",
-  "sha256": "fae98d71a5d77b5655bb4d8e63f930801b5ea8d0cf910903897998f8c3085bf2"
+  "sha256": "1a56c77a1fd42f3eccb2a8adc20d74d8851e3a1fecc9f6109d663eb7e5f998da",
+  "compression": {
+    "max_bytes": 10000000,
+    "main_bytes": 9573796,
+    "silent_bytes": 8787757,
+    "original_bytes": 14614836,
+    "video_bitrate": 1495000,
+    "ssim_against_previous": 0.99472,
+    "music_stream": "sha256_identical",
+    "full_hd_and_1404_frames": "preserved"
+  }
 }
