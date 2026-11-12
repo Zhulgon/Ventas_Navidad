@@ -21,6 +21,10 @@ git push
 
 La exportación incluye las referencias visibles, sus precios, disponibilidad y fotografías. Los costos de compra, las notas de ventas y los datos de clientes se quedan fuera de `docs`. Los archivos de respaldo del repositorio se mantienen aparte del catálogo publicado.
 
+## Video para estados y reels
+
+[Ver y descargar el video desde el celular](https://zhulgon.github.io/Ventas_Navidad/reel/). La carpeta `multimedia` conserva el MP4 vertical de 25,5 segundos, la versión sin música, la portada y el guion para volver a generarlo.
+
 ## Abrir en Windows
 
 Ejecuta `Abrir plataforma.cmd`. Requiere Python 3.10 o posterior y abre [el panel](http://127.0.0.1:8131/) en el navegador. Mantén abierta la consola mientras uses la plataforma. También puedes iniciar desde PowerShell con `py -3 plataforma.py --abrir`.

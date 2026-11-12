@@ -1,0 +1,15 @@
+{
+  "video": "NavidadBGA-reel-estados.mp4",
+  "source_size": [
+    1080,
+    1920
+  ],
+  "codec": "h264",
+  "fps": 30.0,
+  "frames": 765,
+  "duration_seconds": 25.5,
+  "audio_integrated_lufs": "-18.13",
+  "audio_true_peak_dbtp": "-7.23",
+  "decode": "complete_without_errors",
+  "silent_version": "verified_without_audio_track"
+}
