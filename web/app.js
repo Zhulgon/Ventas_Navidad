@@ -23,6 +23,11 @@ function availabilityNote(p) {
   return [incoming > 0 ? `${count.format(incoming)} ${unitName(p, incoming !== 1)} en elaboración` : 'Consulta por encargo',
     expected_on ? `Fecha estimada: ${deliveryDate.format(new Date(`${expected_on}T12:00:00-05:00`))}` : 'Fecha de entrega por confirmar'].join(' · ');
 }
+function catalogBadges(p) {
+  const badges = !customer && !p.published ? '<span class="badge neutral">Borrador</span>' : p.stock <= 0
+    ? `${p.availability?.status === 'in_production' ? '<span class="badge neutral">Sin stock</span>' : ''}<span class="badge ${acceptsInquiry(p) ? 'amber' : 'neutral'}">${availabilityLabel(p)}</span>` : '';
+  return badges ? `<span class="product-badges">${badges}</span>` : '';
+}
 const icons = {
   dashboard: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
   box: '<path d="m12 2 9 5v10l-9 5-9-5V7l9-5Zm0 10v10m9-15-9 5-9-5m4.5-2.5 9 5"/>',
@@ -172,7 +177,7 @@ function catalog() {
 function updateCatalog() {
   const { text, category } = filters.catalog;
   const matches = data.products.filter(p => isMatch(p, text) && (!category || p.category === category));
-  document.querySelector('#catalog-results').innerHTML = matches.length ? `<div class="results">${matches.length} ${matches.length === 1 ? 'artículo' : 'artículos'}</div><div class="catalog-grid">${matches.map(p => `<article class="product-card"><button class="product-image" data-act="detail" data-id="${escape(p.sku)}" aria-label="Ver ${escape(p.name)}">${photo(p)}${!customer && !p.published ? '<span class="badge neutral">Borrador</span>' : p.stock <= 0 ? `<span class="badge ${acceptsInquiry(p) ? 'amber' : 'neutral'}">${availabilityLabel(p)}</span>` : ''}</button><div class="product-copy"><p class="eyebrow">${escape(p.category)}</p><h3><button data-act="detail" data-id="${escape(p.sku)}">${escape(p.name)}</button></h3><p>${p.pieces === 1 ? '1 pieza' : `${count.format(p.pieces)} piezas por juego`}${p.dimensions ? ` · ${escape(p.dimensions)}` : ''}</p>${acceptsInquiry(p) ? `<p class="availability-note">${escape(availabilityNote(p))}</p>` : ''}<div class="product-foot"><strong>${p.price == null ? 'Precio por definir' : money(p.price)}</strong><button class="button outline" data-act="detail" data-id="${escape(p.sku)}">Ver ${icon('arrow')}</button></div></div></article>`).join('')}</div>` : `<div class="panel empty">${customer && !data.products.length ? 'Estamos preparando la colección. Vuelve pronto para ver los artículos disponibles.' : 'No hay artículos para estos filtros.'}</div>`;
+  document.querySelector('#catalog-results').innerHTML = matches.length ? `<div class="results">${matches.length} ${matches.length === 1 ? 'artículo' : 'artículos'}</div><div class="catalog-grid">${matches.map(p => `<article class="product-card"><button class="product-image" data-act="detail" data-id="${escape(p.sku)}" aria-label="Ver ${escape(p.name)}">${photo(p)}${catalogBadges(p)}</button><div class="product-copy"><p class="eyebrow">${escape(p.category)}</p><h3><button data-act="detail" data-id="${escape(p.sku)}">${escape(p.name)}</button></h3><p>${p.pieces === 1 ? '1 pieza' : `${count.format(p.pieces)} piezas por juego`}${p.dimensions ? ` · ${escape(p.dimensions)}` : ''}</p>${acceptsInquiry(p) ? `<p class="availability-note">${escape(availabilityNote(p))}</p>` : ''}<div class="product-foot"><strong>${p.price == null ? 'Precio por definir' : money(p.price)}</strong><button class="button outline" data-act="detail" data-id="${escape(p.sku)}">Ver ${icon('arrow')}</button></div></div></article>`).join('')}</div>` : `<div class="panel empty">${customer && !data.products.length ? 'Estamos preparando la colección. Vuelve pronto para ver los artículos disponibles.' : 'No hay artículos para estos filtros.'}</div>`;
 }
 
 function openDialog(title, content, label = 'COSAS NAVIDEÑAS') {
