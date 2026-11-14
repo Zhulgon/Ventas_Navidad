@@ -8,12 +8,21 @@ const catalogUrl = () => 'https://zhulgon.github.io/Ventas_Navidad/';
 const currency = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 const count = new Intl.NumberFormat('es-CO');
 const date = new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'America/Bogota' });
+const deliveryDate = new Intl.DateTimeFormat('es-CO', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Bogota' });
 const money = value => value == null ? 'Por definir' : currency.format(value);
 const unitName = (product, plural = false) => product.pieces === 1 ? (plural ? 'unidades' : 'unidad') : (plural ? 'juegos' : 'juego');
 const normalize = text => text.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().trim();
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 const isMatch = (p, text) => normalize(`${p.name} ${p.sku} ${p.category} ${p.variant}`).includes(normalize(text));
 const sum = (list, getter) => list.reduce((total, item) => total + getter(item), 0);
+const acceptsInquiry = p => p.stock <= 0 && ['in_production', 'on_request'].includes(p.availability?.status);
+const availabilityLabel = p => p.stock > 0 ? 'Disponible' : p.availability?.status === 'in_production' ? 'En elaboración' : p.availability?.status === 'on_request' ? 'Bajo pedido' : 'Agotado';
+function availabilityNote(p) {
+  if (!acceptsInquiry(p)) return '';
+  const { incoming, expected_on } = p.availability;
+  return [incoming > 0 ? `${count.format(incoming)} ${unitName(p, incoming !== 1)} en elaboración` : 'Consulta por encargo',
+    expected_on ? `Fecha estimada: ${deliveryDate.format(new Date(`${expected_on}T12:00:00-05:00`))}` : 'Fecha de entrega por confirmar'].join(' · ');
+}
 const icons = {
   dashboard: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
   box: '<path d="m12 2 9 5v10l-9 5-9-5V7l9-5Zm0 10v10m9-15-9 5-9-5m4.5-2.5 9 5"/>',
@@ -124,10 +133,10 @@ function options(values, current) { return values.map(name => `<option ${name ==
 function inventory() {
   const { text, category, status } = filters.inventory;
   return `${heading('CONTROL DE EXISTENCIAS', 'Inventario', 'Revisa tus referencias, costos y precios de venta.', newButton)}
-    <section class="panel inventory-panel"><div class="toolbar"><label class="search">${icon('search')}<input type="search" aria-label="Buscar en inventario" placeholder="Buscar por nombre, código o variante" value="${escape(text)}" data-filter="text" data-context="inventory"></label><select aria-label="Filtrar por categoría" data-filter="category" data-context="inventory"><option value="">Todas las categorías</option>${options(categories(data.products), category)}</select><select aria-label="Filtrar por estado" data-filter="status" data-context="inventory"><option value="">Todos los estados</option>${options(['Precio pendiente', 'Sin stock', 'Visible', 'Borrador'], status)}</select></div><div id="inventory-results"></div></section>`;
+    <section class="panel inventory-panel"><div class="toolbar"><label class="search">${icon('search')}<input type="search" aria-label="Buscar en inventario" placeholder="Buscar por nombre, código o variante" value="${escape(text)}" data-filter="text" data-context="inventory"></label><select aria-label="Filtrar por categoría" data-filter="category" data-context="inventory"><option value="">Todas las categorías</option>${options(categories(data.products), category)}</select><select aria-label="Filtrar por estado" data-filter="status" data-context="inventory"><option value="">Todos los estados</option>${options(['Precio pendiente', 'Sin stock', 'En elaboración', 'Bajo pedido', 'Visible', 'Borrador'], status)}</select></div><div id="inventory-results"></div></section>`;
 }
 
-const productStatus = p => p.price == null ? ['Precio pendiente', 'amber'] : p.published ? ['Visible', 'green'] : ['Borrador', 'neutral'];
+const productStatus = p => p.price == null ? ['Precio pendiente', 'amber'] : !p.published ? ['Borrador', 'neutral'] : acceptsInquiry(p) ? [availabilityLabel(p), 'amber'] : ['Visible', 'green'];
 function updateInventory() {
   const { text, category, status } = filters.inventory;
   const matches = data.products.filter(p => isMatch(p, text) && (!category || p.category === category) && (!status || (status === 'Sin stock' ? p.stock === 0 : productStatus(p)[0] === status)));
@@ -163,7 +172,7 @@ function catalog() {
 function updateCatalog() {
   const { text, category } = filters.catalog;
   const matches = data.products.filter(p => isMatch(p, text) && (!category || p.category === category));
-  document.querySelector('#catalog-results').innerHTML = matches.length ? `<div class="results">${matches.length} ${matches.length === 1 ? 'artículo' : 'artículos'}</div><div class="catalog-grid">${matches.map(p => `<article class="product-card"><button class="product-image" data-act="detail" data-id="${escape(p.sku)}" aria-label="Ver ${escape(p.name)}">${photo(p)}${!customer && !p.published ? '<span class="badge neutral">Borrador</span>' : ''}</button><div class="product-copy"><p class="eyebrow">${escape(p.category)}</p><h3><button data-act="detail" data-id="${escape(p.sku)}">${escape(p.name)}</button></h3><p>${p.pieces === 1 ? '1 pieza' : `${count.format(p.pieces)} piezas por juego`}</p><div class="product-foot"><strong>${p.price == null ? 'Precio por definir' : money(p.price)}</strong><button class="button outline" data-act="detail" data-id="${escape(p.sku)}">Ver ${icon('arrow')}</button></div></div></article>`).join('')}</div>` : `<div class="panel empty">${customer && !data.products.length ? 'Estamos preparando la colección. Vuelve pronto para ver los artículos disponibles.' : 'No hay artículos para estos filtros.'}</div>`;
+  document.querySelector('#catalog-results').innerHTML = matches.length ? `<div class="results">${matches.length} ${matches.length === 1 ? 'artículo' : 'artículos'}</div><div class="catalog-grid">${matches.map(p => `<article class="product-card"><button class="product-image" data-act="detail" data-id="${escape(p.sku)}" aria-label="Ver ${escape(p.name)}">${photo(p)}${!customer && !p.published ? '<span class="badge neutral">Borrador</span>' : p.stock <= 0 ? `<span class="badge ${acceptsInquiry(p) ? 'amber' : 'neutral'}">${availabilityLabel(p)}</span>` : ''}</button><div class="product-copy"><p class="eyebrow">${escape(p.category)}</p><h3><button data-act="detail" data-id="${escape(p.sku)}">${escape(p.name)}</button></h3><p>${p.pieces === 1 ? '1 pieza' : `${count.format(p.pieces)} piezas por juego`}${p.dimensions ? ` · ${escape(p.dimensions)}` : ''}</p>${acceptsInquiry(p) ? `<p class="availability-note">${escape(availabilityNote(p))}</p>` : ''}<div class="product-foot"><strong>${p.price == null ? 'Precio por definir' : money(p.price)}</strong><button class="button outline" data-act="detail" data-id="${escape(p.sku)}">Ver ${icon('arrow')}</button></div></div></article>`).join('')}</div>` : `<div class="panel empty">${customer && !data.products.length ? 'Estamos preparando la colección. Vuelve pronto para ver los artículos disponibles.' : 'No hay artículos para estos filtros.'}</div>`;
 }
 
 function openDialog(title, content, label = 'COSAS NAVIDEÑAS') {
@@ -184,6 +193,9 @@ function productDialog(p = { pieces: 1, total: 1 }) {
     <p class="form-help">${editing ? `${p.sold} vendidos · ${p.stock} disponibles. El total registrado incluye los vendidos.` : 'Registra la cantidad disponible y cuántas piezas incluye cada presentación.'}</p>
     <div class="field-grid">${input('Medidas', 'dimensions', p.dimensions, 'maxlength="200"')}${input('Variante', 'variant', p.variant, 'maxlength="200"')}</div>
     <div class="field-grid">${input('Costo por presentación (COP)', 'cost', p.cost, `type="number" min="0" step="any" max="1000000000" ${p.is_bundle ? 'readonly' : ''}`)}${input('Precio de venta (COP)', 'price', p.price, 'type="number" min="1" max="1000000000"')}</div>
+    <label class="field"><span>Disponibilidad cuando se agote</span><select name="availability_status">${[['', 'Agotado'], ['in_production', 'En elaboración'], ['on_request', 'Bajo pedido']].map(([value, label]) => `<option value="${value}" ${value === (p.availability?.status || '') ? 'selected' : ''}>${label}</option>`).join('')}</select></label>
+    <div class="field-grid">${input('Cantidad en elaboración', 'incoming', p.availability?.incoming ?? 0, 'type="number" min="0" max="1000000000"')}${input('Fecha estimada de disponibilidad', 'expected_on', p.availability?.expected_on, 'type="date"')}</div>
+    <p class="form-help">Los artículos en elaboración se muestran por encargo. Solo aumenta las existencias cuando estén listos para entrega.</p>
     <label class="checkbox"><input type="checkbox" name="published" ${p.published ? 'checked' : ''}><span>Mostrar en la vista cliente <small>Requiere precio de venta.</small></span></label>
     ${formEnd('Guardar artículo')}</form>`, 'INVENTARIO');
 }
@@ -206,7 +218,20 @@ function detail(p, original = false) {
   const canAdd = p.price > 0 && currentQuantity < selectionLimit(p);
   const referenceLink = p.photo !== p.studio_photo ? ` · <button class="text-button" data-act="${original ? 'detail' : 'original'}" data-id="${escape(p.sku)}">${original ? 'Ver estudio' : 'Ver referencia'}</button>` : '';
   const comparison = p.studio_photo ? `<p class="photo-caption">${original ? 'Foto de referencia' : 'Imagen de estudio editada con IA'}${referenceLink}</p>` : '';
-  openDialog(escape(p.name), `<div class="detail"><div>${photo(p, 'detail-photo', original)}${comparison}</div><div class="detail-info"><span class="badge green">${escape(p.sku)}</span><dl><dt>Presentación</dt><dd>${p.pieces === 1 ? 'Venta por unidad' : `${count.format(p.pieces)} piezas por juego`}</dd>${p.variant ? `<dt>Variante</dt><dd>${escape(p.variant)}</dd>` : ''}${p.dimensions ? `<dt>Medidas</dt><dd>${escape(p.dimensions)}</dd>` : ''}<dt>Disponibilidad</dt><dd>${p.stock ? `${p.stock} ${unitName(p, p.stock !== 1)} ${p.stock === 1 ? 'disponible' : 'disponibles'}` : 'Agotado'}</dd></dl><div class="detail-price">${p.price == null ? 'Precio por definir' : money(p.price)}</div><button class="button primary" data-act="select" data-id="${escape(p.sku)}" ${canAdd ? '' : 'disabled'}>${icon('plus')} Agregar a mi selección</button>${customer ? '' : `<button class="text-button" data-act="edit" data-id="${escape(p.sku)}">Editar artículo</button>`}</div></div>`, escape(p.category));
+  const availability = p.stock > 0 ? `${p.stock} ${unitName(p, p.stock !== 1)} ${p.stock === 1 ? 'disponible' : 'disponibles'}` : `<strong>${availabilityLabel(p)}</strong>${acceptsInquiry(p) ? `<p>Sin existencias para entrega inmediata.</p><p class="availability-note">${escape(availabilityNote(p))}</p>` : ''}`;
+  const action = acceptsInquiry(p) ? `<button class="button primary" data-act="instagram-inquiry" data-id="${escape(p.sku)}">${icon('instagram')} Consultar por Instagram</button>` : `<button class="button primary" data-act="select" data-id="${escape(p.sku)}" ${canAdd ? '' : 'disabled'}>${icon('plus')} ${p.stock > 0 ? 'Agregar a mi selección' : 'Agotado'}</button>`;
+  openDialog(escape(p.name), `<div class="detail"><div>${photo(p, 'detail-photo', original)}${comparison}</div><div class="detail-info"><span class="badge green">${escape(p.sku)}</span><dl><dt>Presentación</dt><dd>${p.pieces === 1 ? 'Venta por unidad' : `${count.format(p.pieces)} piezas por juego`}</dd>${p.variant ? `<dt>Variante</dt><dd>${escape(p.variant)}</dd>` : ''}${p.dimensions ? `<dt>Medidas</dt><dd>${escape(p.dimensions)}</dd>` : ''}<dt>Disponibilidad</dt><dd>${availability}</dd></dl><div class="detail-price">${p.price == null ? 'Precio por definir' : money(p.price)}</div>${action}${customer ? '' : `<button class="text-button" data-act="edit" data-id="${escape(p.sku)}">Editar artículo</button>`}</div></div>`, escape(p.category));
+}
+
+function inquiryText(p) {
+  return ['Hola, Navidad BGA. Me interesa este artículo:', '', `${p.name} (${p.sku})`, `${money(p.price)} / ${unitName(p)}`,
+    `${availabilityLabel(p)}. ${availabilityNote(p)}`, '', '¿Puedo encargarlo y confirmar la fecha de entrega?', `Catálogo: ${catalogUrl()}`].join('\n');
+}
+
+async function instagramInquiryDialog(p) {
+  if (!acceptsInquiry(p)) return detail(p);
+  openDialog('Consulta por encargo', `<p class="order-intro">Consulta la elaboración y la fecha de entrega con <strong>@${instagramShop.handle}</strong>. Copia el mensaje, abre Instagram y envíalo por el chat.</p><label class="field"><span>Consulta del artículo</span><textarea id="instagram-order-text" data-message-type="inquiry" readonly rows="9">${escape(inquiryText(p))}</textarea></label><p id="instagram-order-status" class="order-copy-status" role="status" aria-live="polite"></p><div class="form-actions"><button class="button outline" data-act="detail" data-id="${escape(p.sku)}">Volver al artículo</button><button class="button outline" data-act="copy-instagram-order">Copiar consulta</button><a class="button primary" href="${instagramShop.profile}" target="_blank" rel="noopener">${icon('instagram')} Abrir Instagram ${icon('external')}</a></div>`, 'EN ELABORACIÓN Y BAJO PEDIDO');
+  await copyInstagramOrder();
 }
 
 function productParts(product) {
@@ -268,7 +293,7 @@ async function copyInstagramOrder() {
   if (!field || !status) return;
   try {
     await navigator.clipboard.writeText(field.value);
-    status.textContent = 'Pedido copiado. Abre Instagram, pulsa Mensaje, pega el pedido y pulsa Enviar.';
+    status.textContent = field.dataset?.messageType === 'inquiry' ? 'Consulta copiada. Abre Instagram, pulsa Mensaje, pega la consulta y pulsa Enviar.' : 'Pedido copiado. Abre Instagram, pulsa Mensaje, pega el pedido y pulsa Enviar.';
   } catch {
     field.focus();
     field.select();
@@ -345,6 +370,7 @@ async function handleAction(event) {
   if (act === 'close') dialog.close();
   if (act === 'selection') selectionDialog();
   if (act === 'instagram-order') await instagramOrderDialog();
+  if (act === 'instagram-inquiry' && product) await instagramInquiryDialog(product);
   if (act === 'copy-instagram-order') await copyInstagramOrder();
   if (act === 'share-catalog' || act === 'share-selection') {
     const text = act === 'share-selection' ? summaryText(selectedItems()) : 'Mira la colección de Cosas Navideñas';

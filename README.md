@@ -23,6 +23,8 @@ La exportación incluye las referencias visibles, sus precios, disponibilidad y 
 
 El catálogo y el inventario visible incluyen 41 referencias navideñas. Las cinco figuras de anime (TM-036, TM-039, TM-040, TM-041 y TM-043) están retiradas; su categoría queda archivada para que no reaparezcan al importar el Excel.
 
+El mantel blanco con árboles y lazos rojos mide **70 × 70 cm**, es cuadrado y cuesta **$10.000 COP**. El conjunto de Papá Noel azul y blanco está agotado: hay **3 juegos en elaboración**, con disponibilidad estimada el **29 de noviembre de 2026**. Su ficha permite consultar por Instagram sin contar la producción como existencias disponibles.
+
 ## Video para estados y reels
 
 [Ver y descargar el video desde el celular](https://zhulgon.github.io/Ventas_Navidad/reel/). La carpeta `multimedia` conserva el MP4 vertical de 46,8 segundos, la versión sin música, la portada y el guion para volver a generarlo. La edición actual presenta 13 referencias por colecciones: seis modelos de Papá Noel, los dos tipos de gnomos, tres manteles y dos juegos de fundas. El precio del juego de fundas doradas se corrigió a $20.000 COP en el inventario, el catálogo, Instagram y el video.
@@ -42,6 +44,8 @@ Los Excel de compras están en `datos/fuentes`. Puedes importar una versión act
 1. **Importar Excel.** Guarda los cambios en el archivo, selecciona su versión reciente en el panel, revisa las filas y confirma. Conserva los encabezados y asigna un ID único a cada referencia. Para aumentar la compra del mismo artículo, cambia el total acumulado de juegos en su fila. Usa **Agregar artículo** para registrar compras directamente en la plataforma.
 2. **Preparar el catálogo.** Define el precio de venta y activa **Mostrar en la vista cliente** para cada artículo listo. **Vista del catálogo** incluye borradores. **Vista cliente** muestra las referencias activadas y permite armar una selección. Puedes configurar el WhatsApp del negocio en **Contacto**.
 3. **Registrar ventas.** Ingresa cantidad y precio real. El stock baja automáticamente. Al anular una venta, la cantidad regresa al inventario y el registro permanece en el historial. La ganancia bruta usa el costo guardado al registrar la venta.
+
+En **Editar artículo** puedes indicar **En elaboración** o **Bajo pedido**, la cantidad en producción y la fecha estimada. Al recibir los productos, aumenta la cantidad registrada y elimina el aviso de elaboración si ya no corresponde. La fecha estimada no aumenta el stock automáticamente.
 
 Una reimportación aplica los campos que cambiaron en Excel desde la última carga. Los campos intactos conservan los ajustes hechos en la plataforma. Las ventas y los artículos omitidos del archivo se conservan. Se toma la primera foto JPG, PNG o WebP anclada en la columna B de cada fila. También puedes cargar la foto desde la ficha.
 

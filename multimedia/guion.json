@@ -1,10 +1,10 @@
 {
   "brand": "Navidad BGA",
-  "edition": 3,
+  "edition": 4,
   "format": "1080×1920, 9:16",
   "fps": 30,
   "frames": 1404,
-  "art_direction": "Colecciones ordenadas: gnomos pequeños con luz y grandes sin luz; seis modelos de Papá Noel; variedad de manteles; fundas con precio corregido",
+  "art_direction": "Colecciones ordenadas; mantel blanco cuadrado de 70 × 70 cm a $10.000; conjunto azul en elaboración y disponible por encargo",
   "chapters": [
     "Muñequitos y gnomos",
     "Papá Noel",
@@ -19,8 +19,8 @@
     "resolution_unchanged": true,
     "audio_bitrate": 128000,
     "video_bitrate": 1495000,
-    "main_bytes": 9573796,
-    "silent_bytes": 8787757
+    "main_bytes": 9574590,
+    "silent_bytes": 8788539
   },
   "duration_seconds": 46.8,
   "transitions": "Paso de 12 fotogramas por un fondo liso, sin superponer productos; acercamiento suave sin recortar",
@@ -125,8 +125,8 @@
         "de invierno."
       ],
       "price": 45000,
-      "unit": "Juego de 2 figuras",
-      "detail": "Azul y blanco",
+      "unit": "En elaboración",
+      "detail": "3 juegos · Consulta por encargo",
       "pieces": 2,
       "source": "docs/fotos/edd97e0e3610bbc85475745f7ae2c4e96a8d1c02324a8f279257973ec16da688.webp"
     },
@@ -187,14 +187,14 @@
       "number": 9,
       "chapter": 2,
       "sku": "MT-BLANCO-LAZOS",
-      "category": "MANTELES · MÁS FORMAS",
+      "category": "MANTEL CUADRADO · 70 × 70 CM",
       "title": [
-        "Cuadrados y",
-        "rectangulares."
+        "Árboles y",
+        "lazos rojos."
       ],
-      "price": 20000,
-      "unit": "Modelo con lazos",
-      "detail": "Blanco y rojo",
+      "price": 10000,
+      "unit": "Mantel 70 × 70 cm",
+      "detail": "Cuadrado · Blanco y rojo",
       "pieces": 1,
       "source": "docs/fotos/d67d0407014500967dc2ec2a8f126683abf10cde6dcc1a431da08f822ae24774.webp"
     },

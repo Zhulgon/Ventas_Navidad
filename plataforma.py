@@ -7,7 +7,7 @@ import re
 import sqlite3
 import webbrowser
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Timer
@@ -49,6 +49,12 @@ CREATE TABLE IF NOT EXISTS studio_photos (
 );
 CREATE TABLE IF NOT EXISTS retired_products (
     sku TEXT PRIMARY KEY REFERENCES products(sku), note TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS product_availability (
+    sku TEXT PRIMARY KEY REFERENCES products(sku),
+    status TEXT NOT NULL CHECK (status IN ('in_production', 'on_request')),
+    incoming INTEGER NOT NULL DEFAULT 0 CHECK (incoming >= 0),
+    expected_on TEXT NOT NULL DEFAULT ''
 );
 CREATE TABLE IF NOT EXISTS sales (
     id INTEGER PRIMARY KEY, sku TEXT NOT NULL REFERENCES products(sku), name TEXT NOT NULL,
@@ -137,7 +143,10 @@ def restore_saved_inventory(db):
         return False
     db.execute('ATTACH DATABASE ? AS saved', (str(SAVED_INVENTORY),))
     for table in ('photos', 'products', 'studio_photos', 'retired_products', 'sales',
-                  'bundle_components', 'sale_components', 'settings'):
+                  'bundle_components', 'sale_components', 'settings', 'product_availability'):
+        if table == 'product_availability' and not db.execute(
+                "SELECT 1 FROM saved.sqlite_master WHERE type='table' AND name=?", (table,)).fetchone():
+            continue
         db.execute(f'INSERT INTO main.{table} SELECT * FROM saved.{table}')
     return True
 
@@ -220,6 +229,20 @@ def save_product(db, data):
     if category.lower() in ARCHIVED_CATEGORIES:
         raise ValueError('Esta categoría está archivada. Elige una categoría activa.')
     cost = None if bundle else number(data.get('cost'), 'Costo por juego', optional=True, integer=False)
+    availability = None
+    if 'availability_status' in data:
+        status = field(data, 'availability_status', 'Disponibilidad', 20)
+        if status not in ('', 'in_production', 'on_request'):
+            raise ValueError('Elige una disponibilidad válida.')
+        incoming = number(data.get('incoming', 0), 'Cantidad en elaboración') if status else 0
+        expected_on = field(data, 'expected_on', 'Fecha estimada', 10) if status else ''
+        if expected_on:
+            try:
+                if date.fromisoformat(expected_on).isoformat() != expected_on:
+                    raise ValueError
+            except ValueError:
+                raise ValueError('Usa una fecha estimada válida.') from None
+        availability = (status, incoming, expected_on)
     fields = (field(data, 'name', 'Nombre', 200, True), category, pieces, field(data, 'dimensions', 'Medidas'),
               field(data, 'variant', 'Variante'), price, cost, photo)
     adjustment = old['adjustment'] if bundle else total - (old['bought'] if old else 0)
@@ -229,6 +252,14 @@ def save_product(db, data):
     else:
         db.execute(f'INSERT INTO products (sku, adjustment, published, {FIELDS}) VALUES (?,?,?,{",".join("?" for _ in EDITABLE)})',
                    (sku, adjustment, published, *fields))
+    if availability is not None:
+        status, incoming, expected_on = availability
+        if status:
+            db.execute('INSERT INTO product_availability (sku,status,incoming,expected_on) VALUES (?,?,?,?) '
+                       'ON CONFLICT(sku) DO UPDATE SET status=excluded.status, incoming=excluded.incoming, '
+                       'expected_on=excluded.expected_on', (sku, status, incoming, expected_on))
+        else:
+            db.execute('DELETE FROM product_availability WHERE sku=?', (sku,))
 
 
 def timestamp():
@@ -258,7 +289,11 @@ def product_components(db, products):
                           'FROM bundle_components c JOIN inventory_units i ON i.sku=c.component_sku '
                           'ORDER BY c.component_sku'):
         components.setdefault(row['bundle_sku'], []).append(dict(sku=row['component_sku'], quantity=row['quantity'], stock=row['stock']))
-    return [dict(product, components=components.get(product['sku'], [])) for product in products]
+    availability = {row['sku']: dict(status=row['status'], incoming=row['incoming'], expected_on=row['expected_on'])
+                    for row in db.execute('SELECT * FROM product_availability')}
+    return [dict(product, components=components.get(product['sku'], []),
+                 **({'availability': availability[product['sku']]} if product['sku'] in availability else {}))
+            for product in products]
 
 
 def public_catalog(db):

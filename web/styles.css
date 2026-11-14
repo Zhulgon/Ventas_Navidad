@@ -195,6 +195,7 @@ td small, .item-name small { display: block; color: var(--muted); font-size: .74
 .product-copy h3 button { text-align: left; border: 0; padding: 0; font-weight: 700; line-height: inherit; background: none; }
 .product-copy h3 button:hover { text-decoration: underline; }
 .product-copy > p:not(.eyebrow) { color: var(--muted); font-size: .8rem; }
+.product-copy > .availability-note, .detail-info .availability-note { color: #77541c; line-height: 1.5; }
 .product-foot { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 7px; padding-top: 9px; margin-top: auto; font-size: .87rem; }
 .product-foot .button { min-height: 35px; padding: 5px 8px; }
 

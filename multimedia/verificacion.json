@@ -1,6 +1,6 @@
 {
   "video": "NavidadBGA-reel-estados.mp4",
-  "edition": 3,
+  "edition": 4,
   "source_size": [
     1080,
     1920
@@ -16,15 +16,16 @@
   "catalog_prices": "verified_for_all_13_references",
   "public_copies": "sha256_identical",
   "streaming": "moov_before_mdat",
-  "sha256": "1a56c77a1fd42f3eccb2a8adc20d74d8851e3a1fecc9f6109d663eb7e5f998da",
+  "sha256": "162b218fcb14f2da382f9fb1b0b281055d6b8dba752806fc0d117eb3f90a023d",
+  "corrections": {
+    "tablecloth": "70 x 70 cm; COP 10000",
+    "blue_set": "Out of stock; 3 sets in production; inquiry by Instagram"
+  },
   "compression": {
     "max_bytes": 10000000,
-    "main_bytes": 9573796,
-    "silent_bytes": 8787757,
-    "original_bytes": 14614836,
+    "main_bytes": 9574590,
+    "silent_bytes": 8788539,
     "video_bitrate": 1495000,
-    "ssim_against_previous": 0.99472,
-    "music_stream": "sha256_identical",
     "full_hd_and_1404_frames": "preserved"
   }
 }

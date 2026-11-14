@@ -105,9 +105,9 @@
       "name": "Mantel navideño blanco con árboles y lazos rojos",
       "category": "Manteles",
       "pieces": 1,
-      "dimensions": "Medidas por confirmar",
-      "variant": "Blanco y rojo, rectangular",
-      "price": 20000,
+      "dimensions": "70 × 70 cm",
+      "variant": "Blanco y rojo, cuadrado",
+      "price": 10000,
       "photo": "d67d0407014500967dc2ec2a8f126683abf10cde6dcc1a431da08f822ae24774.webp",
       "studio_photo": "d67d0407014500967dc2ec2a8f126683abf10cde6dcc1a431da08f822ae24774.webp",
       "stock": 1,
@@ -376,9 +376,14 @@
       "price": 45000,
       "photo": "edd97e0e3610bbc85475745f7ae2c4e96a8d1c02324a8f279257973ec16da688.webp",
       "studio_photo": "edd97e0e3610bbc85475745f7ae2c4e96a8d1c02324a8f279257973ec16da688.webp",
-      "stock": 1,
+      "stock": 0,
       "is_bundle": 0,
-      "components": []
+      "components": [],
+      "availability": {
+        "status": "in_production",
+        "incoming": 3,
+        "expected_on": "2026-11-29"
+      }
     },
     {
       "sku": "TM-020",

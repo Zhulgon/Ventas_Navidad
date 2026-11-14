@@ -83,8 +83,8 @@ def make_scenes():
         (1, 3.0, 'TM-045', 'PAPÁ NOEL · COLECCIÓN', ['Santa', 'con su osito.'], 'Por unidad', 'Traje rojo y verde'),
         (2, 3.6, 'MT-ROJO-REDONDO', 'MANTELES REDONDOS', ['Una mesa', 'para celebrar.'],
          'Por unidad', 'Redondo · 150 cm'),
-        (2, 3.6, 'MT-BLANCO-LAZOS', 'MANTELES · MÁS FORMAS', ['Cuadrados y', 'rectangulares.'],
-         'Modelo con lazos', 'Blanco y rojo'),
+        (2, 3.6, 'MT-BLANCO-LAZOS', 'MANTEL CUADRADO · 70 × 70 CM', ['Árboles y', 'lazos rojos.'],
+         'Mantel 70 × 70 cm', 'Cuadrado · Blanco y rojo'),
         (2, 3.6, 'MT-PE-NACIMIENTO', 'MANTEL DESECHABLE · PE', ['La tradición', 'en tu mesa.'],
          'Por unidad', 'Desechable · 220 × 130 cm'),
         (3, 3.6, 'FD-AZUL-4', 'FUNDAS DE COJÍN', ['Un rincón', 'para soñar.'],
@@ -94,10 +94,15 @@ def make_scenes():
     ]
     assert all(products[sku]['price'] == 10000 for sku in ('GN-DORADO', 'GN-GRIS', 'GN-ROJO'))
     assert products['TM-005']['price'] == 20000
+    assert products['MT-BLANCO-LAZOS']['price'] == 10000
     scenes = []
     for number, (chapter, seconds, sku, category, title, unit, detail) in enumerate(specs):
         p = products[sku]
         assert p['category'] != 'Figuras anime' and p['price'] > 0
+        availability = p.get('availability', {})
+        if p['stock'] <= 0 and availability.get('status') == 'in_production':
+            unit = 'En elaboración'
+            detail = f'{availability["incoming"]} juegos · Consulta por encargo'
         scenes.append(dict(kind='product', frames=round(seconds*FPS)+OVERLAP, number=number,
                            chapter=chapter, sku=sku, category=category, title=title,
                            price=p['price'], unit=unit, detail=detail, pieces=p['pieces'],
@@ -257,8 +262,8 @@ def main():
     for i,(scene,plate,photo) in enumerate(prepared):
         frame(scene,plate,photo,scene['frames']//2).save(CACHE/f'{i:02}.jpg',quality=94)
     frame(*prepared[0],69).save(OUT/'portada-reel.jpg',quality=95)
-    manifest=dict(brand='Navidad BGA', edition=3, format='1080×1920, 9:16', fps=FPS, frames=total_frames,
-                  art_direction='Colecciones ordenadas: gnomos pequeños con luz y grandes sin luz; seis modelos de Papá Noel; variedad de manteles; fundas con precio corregido',
+    manifest=dict(brand='Navidad BGA', edition=4, format='1080×1920, 9:16', fps=FPS, frames=total_frames,
+                  art_direction='Colecciones ordenadas; mantel blanco cuadrado de 70 × 70 cm a $10.000; conjunto azul en elaboración y disponible por encargo',
                   chapters=['Muñequitos y gnomos', 'Papá Noel', 'Manteles', 'Fundas'],
                   encoding=dict(max_bytes=MAX_BYTES, target_bytes=TARGET_BYTES,
                                 method='H.264 en dos pasadas desde máster sin pérdida', preset='slow',
