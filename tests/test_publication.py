@@ -24,6 +24,7 @@ class PublicCatalogTests(unittest.TestCase):
                 for sku, category, published, price in [('PUBLIC', 'Muñecos', 1, 10000),
                                                         ('DRAFT', 'Muñecos', 0, 10000),
                                                         ('ARCHIVED', 'Empaque', 1, 10000),
+                                                        ('ANIME', ' Figuras ANIME ', 1, 15000),
                                                         ('RETIRED', 'Muñecos', 1, 10000),
                                                         ('NO-PRICE', 'Muñecos', 1, None)]:
                     db.execute('INSERT INTO products (sku,name,category,bought,pieces,dimensions,variant,price,cost,photo,published,source) '
@@ -34,6 +35,9 @@ class PublicCatalogTests(unittest.TestCase):
                 db.execute("INSERT INTO sales (sku,name,qty,price,cost,buyer,note,created) VALUES ('PUBLIC','PUBLIC',1,10000,1234,'private-buyer','private-note','2026-11-11')")
                 db.commit()
             before = database.read_bytes()
+            (output / 'fotos').mkdir(parents=True)
+            stale_photo = output / 'fotos' / (hashlib.sha256(b'removed-anime').hexdigest() + '.webp')
+            stale_photo.write_bytes(b'removed-anime')
             self.assertEqual(export_catalog(database, output), (1, 1))
             catalog = json.loads((output / 'catalogo.json').read_text('utf-8'))
             self.assertEqual([p['sku'] for p in catalog['products']], ['PUBLIC'])
@@ -41,6 +45,7 @@ class PublicCatalogTests(unittest.TestCase):
             self.assertEqual(product['stock'], 0)
             self.assertEqual((output / 'fotos' / product['photo']).read_bytes(), b'studio')
             self.assertFalse((output / 'fotos' / (photo + '.webp')).exists())
+            self.assertFalse(stale_photo.exists())
             self.assertTrue({'cost', 'source', 'buyer', 'note', 'sales', 'bought', 'adjustment'}.isdisjoint(product))
             self.assertEqual(database.read_bytes(), before)
             self.assertFalse(list(output.rglob('*.sqlite3')))

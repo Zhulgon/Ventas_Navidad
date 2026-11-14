@@ -21,6 +21,8 @@ git push
 
 La exportación incluye las referencias visibles, sus precios, disponibilidad y fotografías. Los costos de compra, las notas de ventas y los datos de clientes se quedan fuera de `docs`. Los archivos de respaldo del repositorio se mantienen aparte del catálogo publicado.
 
+El catálogo y el inventario visible incluyen 41 referencias navideñas. Las cinco figuras de anime (TM-036, TM-039, TM-040, TM-041 y TM-043) están retiradas; su categoría queda archivada para que no reaparezcan al importar el Excel.
+
 ## Video para estados y reels
 
 [Ver y descargar el video desde el celular](https://zhulgon.github.io/Ventas_Navidad/reel/). La carpeta `multimedia` conserva el MP4 vertical de 46,8 segundos, la versión sin música, la portada y el guion para volver a generarlo. La edición actual presenta 13 referencias por colecciones: seis modelos de Papá Noel, los dos tipos de gnomos, tres manteles y dos juegos de fundas. El precio del juego de fundas doradas se corrigió a $20.000 COP en el inventario, el catálogo, Instagram y el video.

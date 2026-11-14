@@ -26,8 +26,8 @@ if not DEFAULT_EXCEL.is_file():
 STUDIO_DIR = ROOT / 'fotos-estudio'
 EDITABLE = ('name', 'category', 'pieces', 'dimensions', 'variant', 'price', 'cost', 'photo')
 FIELDS = ', '.join(EDITABLE)
-ARCHIVED_CATEGORIES = ('manualidades', 'empaque')
-ACTIVE_CATEGORY = 'lower(trim(i.category)) NOT IN (?, ?)'
+ARCHIVED_CATEGORIES = ('manualidades', 'empaque', 'figuras anime')
+ACTIVE_CATEGORY = 'lower(trim(i.category)) NOT IN (' + ', '.join('?' for _ in ARCHIVED_CATEGORIES) + ')'
 ACTIVE_PRODUCT = ACTIVE_CATEGORY + ' AND i.sku NOT IN (SELECT sku FROM retired_products)'
 STUDIO_INVENTORY = (' FROM inventory i LEFT JOIN studio_photos s '
                     'ON s.sku=i.sku AND s.original=i.photo')
