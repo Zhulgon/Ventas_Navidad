@@ -1,7 +1,7 @@
 {
-  "saved_at_utc": "2026-11-14T18:09:27+00:00",
+  "saved_at_utc": "2026-11-14T18:22:52+00:00",
   "inventory": "inventario-inicial.sqlite3",
-  "sha256": "16a277c71a883b12f923c77e4addf6c087ce3d56aac909565f1ea510a3b16f70",
+  "sha256": "f65c8d27c393121b83c461291016ed89bc5a3bf8b5613b86cc60141df48cb109",
   "tables": {
     "products": 63,
     "photos": 126,
@@ -11,13 +11,15 @@
     "sale_components": 0,
     "bundle_components": 3,
     "settings": 0,
-    "product_availability": 1
+    "product_availability": 2
   },
   "latest_corrections": {
     "TM-005": "Precio de venta corregido por el usuario: $20.000 el juego de cuatro.",
     "GN-TEJIDOS": "Gnomos grandes sin luz; se conservan los 10 totales y $10.000 por unidad.",
     "figuras_anime": "TM-036, TM-039, TM-040, TM-041 y TM-043 retiradas del inventario visible y del catalogo por solicitud del usuario. Categoria archivada.",
     "MT-BLANCO-LAZOS": "Medidas corregidas por el usuario: 70 × 70 cm, cuadrado. Precio: $10.000 COP.",
-    "TM-019": "Agotado. Tres juegos de dos figuras en elaboración; disponibilidad estimada el 29 de noviembre de 2026 (15 días desde el aviso del usuario). No se suman al stock hasta estar listos."
+    "TM-019": "Agotado. Tres juegos de dos figuras en elaboración; disponibilidad estimada el 29 de noviembre de 2026 (15 días desde el aviso del usuario). No se suman al stock hasta estar listos.",
+    "TM-022": "Mantel azul con figuras invernales: Bajo pedido.",
+    "TM-003": "Mantel de escenas clásicas: Agotado."
   }
 }

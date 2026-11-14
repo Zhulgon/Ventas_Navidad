@@ -222,7 +222,7 @@
       "price": 25000,
       "photo": "9da21ddb53bc8e7e0f60f4139dbc943a0e2fdb3318566e738706de03bbd96d16.webp",
       "studio_photo": "9da21ddb53bc8e7e0f60f4139dbc943a0e2fdb3318566e738706de03bbd96d16.webp",
-      "stock": 1,
+      "stock": 0,
       "is_bundle": 0,
       "components": []
     },
@@ -423,9 +423,14 @@
       "price": 20000,
       "photo": "0d793a0d220e064b65b0ed240bccbaeb879447a4a846ff943d82e35ca6349540.webp",
       "studio_photo": "0d793a0d220e064b65b0ed240bccbaeb879447a4a846ff943d82e35ca6349540.webp",
-      "stock": 1,
+      "stock": 0,
       "is_bundle": 0,
-      "components": []
+      "components": [],
+      "availability": {
+        "status": "on_request",
+        "incoming": 0,
+        "expected_on": ""
+      }
     },
     {
       "sku": "TM-024",
