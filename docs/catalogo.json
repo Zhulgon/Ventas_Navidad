@@ -306,9 +306,14 @@
       "price": 30000,
       "photo": "22f3c2e6211b20f19e200597865747dd66057154dda391fce95085afe959025b.webp",
       "studio_photo": "22f3c2e6211b20f19e200597865747dd66057154dda391fce95085afe959025b.webp",
-      "stock": 1,
+      "stock": 0,
       "is_bundle": 0,
-      "components": []
+      "components": [],
+      "availability": {
+        "status": "in_production",
+        "incoming": 0,
+        "expected_on": ""
+      }
     },
     {
       "sku": "TM-012",
